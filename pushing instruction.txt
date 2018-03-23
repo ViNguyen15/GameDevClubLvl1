@@ -1,0 +1,12 @@
+1. git status
+2. git add .
+3. git status
+4. git commit -m "what you did"
+5. git status
+6. git push
+7. check if you are working tree clean
+
+***************************************
+-notes
+you should do (git pull) before you start working
+
