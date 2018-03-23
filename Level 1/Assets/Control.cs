@@ -7,23 +7,18 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
-    private float maxSpeed = 5.0f;
-    [SerializeField]
     private float jumpForce;
-
     [SerializeField]
     private Transform[] groundPoints;
-
     [SerializeField]
     private float groundRadius;
-
     [SerializeField]
     private LayerMask isGround;
 
-    private Rigidbody2D myRigidBody;
 
+    private Rigidbody2D myRigidBody;
     private bool isGrounded;
-    private bool jump;
+    private bool jumpButton;
 
 
 
@@ -45,8 +40,7 @@ public class Control : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         Movement(horizontal);
         isGrounded = IsGrounded();
-        ResetInput();
-        Debug.Log(IsGrounded());
+       // Debug.Log(IsGrounded());
     }
 
     private void Movement(float horizontal)
@@ -54,10 +48,10 @@ public class Control : MonoBehaviour {
 
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
 
-        if(isGrounded && jump)
+        if(isGrounded && jumpButton)
         {
-           // isGrounded = false;
             myRigidBody.AddForce(new Vector2(0,jumpForce));
+            jumpButton = false;
         }
 
 
@@ -67,13 +61,8 @@ public class Control : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            jump = true;
+            jumpButton = true;
         }
-    }
-
-    public void ResetInput()
-    {
-        jump = false;
     }
 
     private bool IsGrounded()
