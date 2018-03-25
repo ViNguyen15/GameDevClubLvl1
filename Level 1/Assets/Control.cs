@@ -40,13 +40,13 @@ public class Control : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         Movement(horizontal);
         isGrounded = IsGrounded();
-       // Debug.Log(IsGrounded());
+        //Debug.Log(IsGrounded());
     }
 
     private void Movement(float horizontal)
     {
 
-        myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
+        myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.x);
 
         if(isGrounded && jumpButton)
         {
