@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Control : MonoBehaviour {
 
+    Animator animator;
+
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
@@ -20,18 +22,18 @@ public class Control : MonoBehaviour {
     private bool isGrounded;
     private bool jumpButton;
 
+    private bool faceingRight;
 
 
-	// Use this for initialization
-	void Start () {
+
+
+
+    // Use this for initialization
+    void Start () {
 
         myRigidBody = GetComponent<Rigidbody2D>();
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        HandleInput();
+        animator = GetComponent<Animator>();
+        faceingRight = true;
 		
 	}
 
@@ -40,18 +42,41 @@ public class Control : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         Movement(horizontal);
         isGrounded = IsGrounded();
-        //Debug.Log(IsGrounded());
+
+
+        // Debug.Log(IsGrounded());
     }
+
+
+    // Update is called once per frame
+    void Update () {
+
+        float horizontal = Input.GetAxis("Horizontal");
+        HandleInput();
+
+        //Animation
+        float vertVelocity = myRigidBody.velocity.y;
+        animator.SetFloat("YVelocity", vertVelocity);
+        Flip(horizontal);
+    }
+
 
     private void Movement(float horizontal)
     {
 
-        myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.x);
 
+
+        //Horizontal Movement
+        myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
+
+
+        //Jump
         if(isGrounded && jumpButton)
         {
             myRigidBody.AddForce(new Vector2(0,jumpForce));
             jumpButton = false;
+            animator.SetTrigger("Jump");
+
         }
 
 
@@ -59,9 +84,30 @@ public class Control : MonoBehaviour {
 
     public void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        //Jump
+        if (Input.GetButtonDown("Jump"))
         {
             jumpButton = true;
+        }
+    }
+
+
+    private void Flip(float horizontal)
+    {
+        Vector3 scale = transform.localScale;
+
+        if (horizontal < 0 && faceingRight)
+        {
+            scale.x *= -1;
+            transform.localScale = scale;
+            faceingRight = false;
+        }
+        if (horizontal >0 && !faceingRight)
+        {
+            scale.x *= -1;
+            transform.localScale = scale;
+            faceingRight = true;
         }
     }
 
@@ -77,6 +123,7 @@ public class Control : MonoBehaviour {
                 {
                     if(colliders[i].gameObject != gameObject)
                     {
+                        animator.SetTrigger("Grounded");
                         return true;
                     }
                 }
