@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,15 +19,12 @@ public class Control : MonoBehaviour {
     private LayerMask isGround;
 
 
+
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool jumpButton;
 
     private bool faceingRight;
-
-
-
-
 
     // Use this for initialization
     void Start () {
@@ -58,24 +56,32 @@ public class Control : MonoBehaviour {
         float vertVelocity = myRigidBody.velocity.y;
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
-    }
 
+
+    }
 
     private void Movement(float horizontal)
     {
 
-
-
         //Horizontal Movement
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
+        //Animation for walking
+        if (horizontal != 0)
+        {
+            animator.SetBool("Walking", true);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
+        }
+
 
 
         //Jump
         if(isGrounded && jumpButton)
         {
             myRigidBody.AddForce(new Vector2(0,jumpForce));
-            jumpButton = false;
-            animator.SetTrigger("Jump");
+            jumpButton = false; //animation param
 
         }
 
@@ -123,13 +129,14 @@ public class Control : MonoBehaviour {
                 {
                     if(colliders[i].gameObject != gameObject)
                     {
-                        animator.SetTrigger("Grounded");
+                        animator.SetBool("Grounded", true);
                         return true;
                     }
                 }
 
             }
         }
+        animator.SetBool("Grounded", false);
         return false;
     }
 }
