@@ -42,6 +42,8 @@ public class Control : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         Movement(horizontal);
         isGrounded = IsGrounded();
+
+
         // Debug.Log(IsGrounded());
     }
 
@@ -61,6 +63,7 @@ public class Control : MonoBehaviour {
 
     private void Movement(float horizontal)
     {
+
 
 
         //Horizontal Movement
