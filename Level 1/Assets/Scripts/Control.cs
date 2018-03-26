@@ -17,12 +17,14 @@ public class Control : MonoBehaviour {
     private float groundRadius;
     [SerializeField]
     private LayerMask isGround;
-
+    [SerializeField]
+    private float teleDistance;
 
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool jumpButton;
+    private bool teleButton;
 
     private bool faceingRight;
 
@@ -42,7 +44,7 @@ public class Control : MonoBehaviour {
         isGrounded = IsGrounded();
 
 
-        // Debug.Log(IsGrounded());
+        //Debug.Log(teleButton);
     }
 
 
@@ -81,8 +83,23 @@ public class Control : MonoBehaviour {
         if(isGrounded && jumpButton)
         {
             myRigidBody.AddForce(new Vector2(0,jumpForce));
-            jumpButton = false; //animation param
+            jumpButton = false;
 
+        }
+
+        //Teleport
+        if (teleButton)
+        {
+            if (faceingRight)
+            {
+                myRigidBody.AddForce(new Vector2(teleDistance,0));
+                teleButton = false;
+            }
+            else
+            {
+                myRigidBody.AddForce(new Vector2(-teleDistance,0));
+                teleButton = false;
+            }
         }
 
 
@@ -95,6 +112,11 @@ public class Control : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             jumpButton = true;
+        }
+        //Dash
+        if (Input.GetButtonDown("Fire1"))
+        {
+            teleButton = true;
         }
     }
 
