@@ -19,12 +19,18 @@ public class Control : MonoBehaviour {
     private LayerMask isGround;
     [SerializeField]
     private float teleDistance;
+    [SerializeField]
+    private float dashSpeed;
+
+    private float time;
+    private float dashTime = 0.5f;
 
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool jumpButton;
     private bool teleButton;
+    private bool dashButton;
 
     private bool faceingRight;
 
@@ -44,7 +50,8 @@ public class Control : MonoBehaviour {
         isGrounded = IsGrounded();
 
 
-        //Debug.Log(teleButton);
+        Debug.Log(dashButton);
+        Debug.Log(time);
     }
 
 
@@ -102,6 +109,13 @@ public class Control : MonoBehaviour {
             }
         }
 
+        //Dashing
+        if (dashButton)
+        {
+            StartCoroutine(Dash());
+        }
+
+
 
     }
 
@@ -113,11 +127,43 @@ public class Control : MonoBehaviour {
         {
             jumpButton = true;
         }
-        //Dash
-        if (Input.GetButtonDown("Fire1"))
+        //Teleport
+        if (Input.GetButtonDown("Fire2"))
         {
             teleButton = true;
         }
+        //Dashing
+        if (Input.GetButtonDown("Fire1"))
+        {
+            dashButton = true;
+        }
+    }
+
+    IEnumerator Dash()
+    {
+            time = 0;
+
+            while (time < dashTime)
+            {
+                if (faceingRight)
+                {
+                    myRigidBody.velocity = new Vector2(dashSpeed, myRigidBody.velocity.y);
+                    time += Time.deltaTime;
+                }
+                if (!faceingRight)
+                {
+                    myRigidBody.velocity = new Vector2(-dashSpeed, myRigidBody.velocity.y);
+                    time += Time.deltaTime;
+                }
+
+                if (time > dashTime)
+                {
+                    dashButton = false;
+                }
+
+                yield return null;
+            }
+        
     }
 
 

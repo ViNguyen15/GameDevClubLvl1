@@ -244,6 +244,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   teleDistance: 10000
+  dashSpeed: 20
 --- !u!212 &212291016369808464
 SpriteRenderer:
   m_ObjectHideFlags: 1
