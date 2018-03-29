@@ -32,14 +32,25 @@ public class Control : MonoBehaviour {
     private bool teleButton;
     private bool dashButton;
 
-    private bool faceingRight;
+    //wall prototype
+    [SerializeField]
+    private Transform wallCheckPoint;
+    [SerializeField]
+    private LayerMask wallLayerMask;
+    [SerializeField]
+    private bool wallSliding;
+    [SerializeField]
+    private bool wallCheck;
+
+
+    private bool facingRight;
 
     // Use this for initialization
     void Start () {
 
         myRigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        faceingRight = true;
+        facingRight = true;
 		
 	}
 
@@ -87,9 +98,9 @@ public class Control : MonoBehaviour {
 
 
         //Jump
-        if(isGrounded && jumpButton)
+        if (isGrounded && jumpButton && !wallSliding)
         {
-            myRigidBody.AddForce(new Vector2(0,jumpForce));
+            myRigidBody.AddForce(new Vector2(0, jumpForce));
             jumpButton = false;
 
         }
@@ -97,14 +108,14 @@ public class Control : MonoBehaviour {
         //Teleport
         if (teleButton)
         {
-            if (faceingRight)
+            if (facingRight)
             {
-                myRigidBody.AddForce(new Vector2(teleDistance,0));
+                myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
             }
             else
             {
-                myRigidBody.AddForce(new Vector2(-teleDistance,0));
+                myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
             }
         }
@@ -115,7 +126,51 @@ public class Control : MonoBehaviour {
             StartCoroutine(Dash());
         }
 
+        //Wall
+        if (!isGrounded)
+        {
+            wallCheck = Physics2D.OverlapCircle(wallCheckPoint.position, 0.1f, wallLayerMask);
 
+            if (facingRight && Input.GetAxis("Horizontal") > 0.1f || !facingRight && Input.GetAxis("Horizontal") < 0.1f)
+            {
+               
+
+                if (wallCheck)
+                {
+                    HandleWallSliding();
+                }
+
+            }
+
+
+        }
+
+        if (wallCheck == false || isGrounded)
+        {
+            wallSliding = false;
+        }
+
+
+    }
+
+    //Wall Sliding and Wall Jumping
+    public void HandleWallSliding()
+    {
+        myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1.5f);
+
+        wallSliding = true;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (facingRight==true)
+            {
+                myRigidBody.AddForce(new Vector2(-4, 1.5f)*jumpForce);
+            }
+            else
+            {
+                myRigidBody.AddForce(new Vector2(4, 1.5f)*jumpForce);
+            }
+        }
 
     }
 
@@ -145,12 +200,12 @@ public class Control : MonoBehaviour {
 
             while (time < dashTime)
             {
-                if (faceingRight)
+                if (facingRight)
                 {
                     myRigidBody.velocity = new Vector2(dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
                 }
-                if (!faceingRight)
+                if (!facingRight)
                 {
                     myRigidBody.velocity = new Vector2(-dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
@@ -171,17 +226,17 @@ public class Control : MonoBehaviour {
     {
         Vector3 scale = transform.localScale;
 
-        if (horizontal < 0 && faceingRight)
+        if (horizontal < 0 && facingRight)
         {
             scale.x *= -1;
             transform.localScale = scale;
-            faceingRight = false;
+            facingRight = false;
         }
-        if (horizontal >0 && !faceingRight)
+        if (horizontal >0 && !facingRight)
         {
             scale.x *= -1;
             transform.localScale = scale;
-            faceingRight = true;
+            facingRight = true;
         }
     }
 
