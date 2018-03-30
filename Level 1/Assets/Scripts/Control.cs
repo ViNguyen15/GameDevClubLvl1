@@ -129,9 +129,9 @@ public class Control : MonoBehaviour {
         //Wall
         if (!isGrounded)
         {
-            wallCheck = Physics2D.OverlapCircle(wallCheckPoint.position, 0.1f, wallLayerMask);
+            wallCheck = Physics2D.OverlapCircle(wallCheckPoint.position, 0.2f, wallLayerMask);
 
-            if (facingRight && Input.GetAxis("Horizontal") > 0.1f || !facingRight && Input.GetAxis("Horizontal") < 0.1f)
+            if (facingRight && Input.GetAxis("Horizontal") > -0.5f || !facingRight && Input.GetAxis("Horizontal") < 0.5f)
             {
                
 
@@ -139,18 +139,13 @@ public class Control : MonoBehaviour {
                 {
                     HandleWallSliding();
                 }
-
             }
-
-
         }
 
         if (wallCheck == false || isGrounded)
         {
             wallSliding = false;
         }
-
-
     }
 
     //Wall Sliding and Wall Jumping
@@ -164,11 +159,11 @@ public class Control : MonoBehaviour {
         {
             if (facingRight==true)
             {
-                myRigidBody.AddForce(new Vector2(-4, 1.5f)*jumpForce);
+                myRigidBody.AddForce(new Vector2(-3, 1.7f)*jumpForce);
             }
             else
             {
-                myRigidBody.AddForce(new Vector2(4, 1.5f)*jumpForce);
+                myRigidBody.AddForce(new Vector2(3, 1.7f)*jumpForce);
             }
         }
 
