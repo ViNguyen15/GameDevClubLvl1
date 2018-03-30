@@ -76,13 +76,10 @@ public class Control : MonoBehaviour {
         float vertVelocity = myRigidBody.velocity.y;
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
-
-
     }
 
     private void Movement(float horizontal)
     {
-
         //Horizontal Movement
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
         //Animation for walking
@@ -103,7 +100,6 @@ public class Control : MonoBehaviour {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
             SoundManagerScript.PlaySound("jump");
             jumpButton = false;
-
         }
 
         //Teleport
@@ -152,7 +148,7 @@ public class Control : MonoBehaviour {
     //Wall Sliding and Wall Jumping
     public void HandleWallSliding()
     {
-        myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -1.5f);
+        myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -3f);
 
         wallSliding = true;
 
@@ -160,11 +156,11 @@ public class Control : MonoBehaviour {
         {
             if (facingRight==true)
             {
-                myRigidBody.AddForce(new Vector2(-3, 1.7f)*jumpForce);
+                myRigidBody.AddForce(new Vector2(-5, 1f)*jumpForce);
             }
             else
             {
-                myRigidBody.AddForce(new Vector2(3, 1.7f)*jumpForce);
+                myRigidBody.AddForce(new Vector2(5, 1f)*jumpForce);
             }
         }
 
