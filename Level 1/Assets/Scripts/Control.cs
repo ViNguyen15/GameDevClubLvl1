@@ -28,6 +28,7 @@ public class Control : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
+    //button inputs
     private bool jumpButton;
     private bool teleButton;
     private bool dashButton;
@@ -37,9 +38,9 @@ public class Control : MonoBehaviour {
     private Transform wallCheckPoint;
     [SerializeField]
     private LayerMask wallLayerMask;
-    [SerializeField]
+
+
     private bool wallSliding;
-    [SerializeField]
     private bool wallCheck;
 
 
