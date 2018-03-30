@@ -37,9 +37,10 @@ public class Control : MonoBehaviour {
     private Transform wallCheckPoint;
     [SerializeField]
     private LayerMask wallLayerMask;
-    [SerializeField]
+
+
+
     private bool wallSliding;
-    [SerializeField]
     private bool wallCheck;
 
 
@@ -62,7 +63,7 @@ public class Control : MonoBehaviour {
 
 
         Debug.Log(dashButton);
-        Debug.Log(time);
+       // Debug.Log(time);
     }
 
 
@@ -101,6 +102,7 @@ public class Control : MonoBehaviour {
         if (isGrounded && jumpButton && !wallSliding)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
+            SoundManagerScript.PlaySound("jump");
             jumpButton = false;
 
         }
