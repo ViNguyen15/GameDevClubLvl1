@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1675457111063612}
   m_IsPrefabParent: 1
+--- !u!1 &1033096947001138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4798420546368936}
+  m_Layer: 9
+  m_Name: Wall Point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1063496075307172
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,6 +71,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1260729552060074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4755654041596694}
+  m_Layer: 9
+  m_Name: Wall Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1547148005679760
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118418080321804}
   m_Layer: 9
-  m_Name: WallCheck
+  m_Name: Wall Point (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,11 +143,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1643078239773830}
   m_LocalRotation: {x: -0, y: -0.006296358, z: -0, w: 0.9999802}
-  m_LocalPosition: {x: 0.111, y: 0.006, z: -0.01}
-  m_LocalScale: {x: 0.6120689, y: 0.49730617, z: 0.6120688}
+  m_LocalPosition: {x: 0.13999988, y: 0.133, z: -0.01}
+  m_LocalScale: {x: 0.61307204, y: 0.49730694, z: 0.61306673}
   m_Children: []
   m_Father: {fileID: 4515385220995594}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -0.72200006, z: 0}
 --- !u!4 &4283808395293122
 Transform:
@@ -139,13 +169,15 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675457111063612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -58.63, y: 13.82, z: 0}
+  m_LocalPosition: {x: -58.9, y: 13.82, z: 0}
   m_LocalScale: {x: 7.024525, y: 6.009307, z: 1}
   m_Children:
   - {fileID: 4283808395293122}
   - {fileID: 4724085599389894}
   - {fileID: 4693490584652734}
   - {fileID: 4853834231283348}
+  - {fileID: 4755654041596694}
+  - {fileID: 4798420546368936}
   - {fileID: 4118418080321804}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -176,6 +208,32 @@ Transform:
   m_Father: {fileID: 4515385220995594}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4755654041596694
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260729552060074}
+  m_LocalRotation: {x: -0, y: -0.006296358, z: -0, w: 0.9999802}
+  m_LocalPosition: {x: 0.14, y: 0.006, z: -0.01}
+  m_LocalScale: {x: 0.6120689, y: 0.49730617, z: 0.6120688}
+  m_Children: []
+  m_Father: {fileID: 4515385220995594}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -0.72200006, z: 0}
+--- !u!4 &4798420546368936
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033096947001138}
+  m_LocalRotation: {x: -0, y: -0.006296358, z: -0, w: 0.9999802}
+  m_LocalPosition: {x: 0.13999988, y: -0.163, z: -0.01}
+  m_LocalScale: {x: 0.6125704, y: 0.49730694, z: 0.61256665}
+  m_Children: []
+  m_Father: {fileID: 4515385220995594}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: -0.72200006, z: 0}
 --- !u!4 &4853834231283348
 Transform:
   m_ObjectHideFlags: 1
@@ -268,14 +326,14 @@ MonoBehaviour:
   - {fileID: 4283808395293122}
   - {fileID: 4724085599389894}
   - {fileID: 4693490584652734}
-  - {fileID: 4118418080321804}
+  - {fileID: 4755654041596694}
   groundRadius: 0.2
   isGround:
     serializedVersion: 2
     m_Bits: 256
   teleDistance: 10000
   dashSpeed: 20
-  wallCheckPoint: {fileID: 4118418080321804}
+  wallCheckPoint: {fileID: 4755654041596694}
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 1024

@@ -14,6 +14,8 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private Transform[] groundPoints;
     [SerializeField]
+    private Transform[] wallPoints;
+    [SerializeField]
     private float groundRadius;
     [SerializeField]
     private LayerMask isGround;
@@ -28,6 +30,7 @@ public class Control : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
+    private bool onWall;
     //button inputs
     private bool jumpButton;
     private bool teleButton;
@@ -57,12 +60,12 @@ public class Control : MonoBehaviour {
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        Movement(horizontal);
         isGrounded = IsGrounded();
+        onWall = OnWall();
+        Movement(horizontal);
 
-
-        Debug.Log(dashButton);
-       // Debug.Log(time);
+        Debug.Log(onWall + " On Wall");
+        Debug.Log(isGrounded + " Grounded");
     }
 
 
@@ -123,47 +126,27 @@ public class Control : MonoBehaviour {
             StartCoroutine(Dash());
         }
 
-        //Wall
-        if (!isGrounded)
+
+        //WallJump
+        if(!isGrounded && jumpButton && onWall)
         {
-            wallCheck = Physics2D.OverlapCircle(wallCheckPoint.position, 0.2f, wallLayerMask);
-
-            if (facingRight && Input.GetAxis("Horizontal") > -0.5f || !facingRight && Input.GetAxis("Horizontal") < 0.5f)
+            if(facingRight)
             {
-               
-
-                if (wallCheck)
-                {
-                    HandleWallSliding();
-                }
+                myRigidBody.AddForce(new Vector2(-jumpForce*3, jumpForce));
+                jumpButton = false;
+            }
+            if (!facingRight)
+            {
+                myRigidBody.AddForce(new Vector2(jumpForce*3, jumpForce));
+                jumpButton = false;
             }
         }
 
-        if (wallCheck == false || isGrounded)
+        //WallSlide
+        if (onWall)
         {
-            wallSliding = false;
+            myRigidBody.velocity = new Vector2(0, -3f);
         }
-    }
-
-    //Wall Sliding and Wall Jumping
-    public void HandleWallSliding()
-    {
-        myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -3f);
-
-        wallSliding = true;
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (facingRight==true)
-            {
-                myRigidBody.AddForce(new Vector2(-5, 1f)*jumpForce);
-            }
-            else
-            {
-                myRigidBody.AddForce(new Vector2(5, 1f)*jumpForce);
-            }
-        }
-
     }
 
     public void HandleInput()
@@ -232,6 +215,7 @@ public class Control : MonoBehaviour {
         }
     }
 
+
     private bool IsGrounded()
     {
         if(myRigidBody.velocity.y <= 0)
@@ -252,6 +236,28 @@ public class Control : MonoBehaviour {
             }
         }
         animator.SetBool("Grounded", false);
+        return false;
+    }
+
+
+    private bool OnWall()
+    {
+        //Wall
+        if (!isGrounded)
+        {
+            foreach(Transform point in wallPoints)
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(point.position, groundRadius, isGround);
+
+                for(int i = 0; i < colliders.Length; i++)
+                {
+                    if(colliders[i].gameObject != gameObject)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 }
