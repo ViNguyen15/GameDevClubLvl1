@@ -81,6 +81,12 @@ public class Control : MonoBehaviour {
         Flip(horizontal);
     }
 
+    private void LateUpdate()
+    {
+        animator.SetBool("Dashing", false);
+
+    }
+
     private void Movement(float horizontal)
     {
         //Horizontal Movement
@@ -123,12 +129,13 @@ public class Control : MonoBehaviour {
         //Dashing
         if (dashButton)
         {
+            animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
         }
 
 
         //WallJump
-        if(!isGrounded && jumpButton && onWall)
+        if (!isGrounded && jumpButton && onWall)
         {
             if(facingRight)
             {
@@ -190,10 +197,9 @@ public class Control : MonoBehaviour {
                 {
                     dashButton = false;
                 }
-
-                yield return null;
+            yield return null;
             }
-        
+       // animator.SetBool("Dashing", false);
     }
 
 
