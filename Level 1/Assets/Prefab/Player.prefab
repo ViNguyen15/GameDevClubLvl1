@@ -335,7 +335,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   teleDistance: 10000
-  dashSpeed: 20
+  dashSpeed: 30
   wallCheckPoint: {fileID: 4755654041596694}
   wallLayerMask:
     serializedVersion: 2

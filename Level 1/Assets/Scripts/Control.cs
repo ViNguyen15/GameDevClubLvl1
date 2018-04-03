@@ -64,8 +64,8 @@ public class Control : MonoBehaviour {
         onWall = OnWall();
         Movement(horizontal);
 
-        Debug.Log(onWall + " On Wall");
-        Debug.Log(isGrounded + " Grounded");
+       // Debug.Log(onWall + " On Wall");
+       // Debug.Log(isGrounded + " Grounded");
     }
 
 
@@ -156,7 +156,7 @@ public class Control : MonoBehaviour {
         }
     }
 
-    public void HandleInput()
+    private void HandleInput()
     {
 
         //Jump
