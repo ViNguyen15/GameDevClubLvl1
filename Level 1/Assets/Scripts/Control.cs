@@ -27,10 +27,15 @@ public class Control : MonoBehaviour {
     private float time;
     private float dashTime = 0.5f;
 
+    //health
+    private int health = 100;
+    private bool isDead;
+    private bool damage;
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool onWall;
+
     //button inputs
     private bool jumpButton;
     private bool teleButton;
@@ -49,13 +54,43 @@ public class Control : MonoBehaviour {
     private bool facingRight;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
 
         myRigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingRight = true;
-		
-	}
+
+
+    }
+
+    //health ...I feel like I definitely messed up in here
+    public class Health {
+        private int health;
+    
+    public int getHealth()
+    {
+        return this.health;
+    }
+
+    public void getHealth(int health)
+    {
+        this.health = health;
+    }
+}
+    //thought i could do something
+    public void TakeDamage()
+    {
+
+    }
+
+    //death ...Feel a little off
+    public void Death()
+    {
+        if (health <= 0)
+        {
+            isDead = true;
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -220,7 +255,7 @@ public class Control : MonoBehaviour {
             facingRight = true;
         }
     }
-
+    
 
     private bool IsGrounded()
     {
