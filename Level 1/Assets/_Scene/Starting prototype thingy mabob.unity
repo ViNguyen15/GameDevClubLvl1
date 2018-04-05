@@ -212,9 +212,9 @@ Transform:
   - {fileID: 443152184}
   - {fileID: 998863007}
   - {fileID: 750345782}
+  - {fileID: 1142706804}
   - {fileID: 442932307}
   - {fileID: 1301121434}
-  - {fileID: 1142706804}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1898,7 +1898,7 @@ Prefab:
     - target: {fileID: 20147924717444976, guid: 72d2683b2f6592040b6beefc85234743,
         type: 2}
       propertyPath: orthographic size
-      value: 14.129964
+      value: 9.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72d2683b2f6592040b6beefc85234743, type: 2}
