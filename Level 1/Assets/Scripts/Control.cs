@@ -28,7 +28,8 @@ public class Control : MonoBehaviour {
     private float dashTime = 0.5f;
 
     //health
-    private int health = 100;
+    private int startingHealth = 100;
+    private int currentHealth;
     private bool isDead;
     private bool damage;
 
@@ -60,23 +61,26 @@ public class Control : MonoBehaviour {
         animator = GetComponent<Animator>();
         facingRight = true;
 
+        //initialing starting health
+        currentHealth = startingHealth;
 
     }
 
     //health ...I feel like I definitely messed up in here
     public class Health {
-        private int health;
+        private int currentHealth;
     
     public int getHealth()
     {
-        return this.health;
+        return this.currentHealth;
     }
 
     public void getHealth(int health)
     {
-        this.health = health;
+        this.currentHealth = health;
     }
 }
+
     //thought i could do something
     public void TakeDamage()
     {
@@ -86,7 +90,7 @@ public class Control : MonoBehaviour {
     //death ...Feel a little off
     public void Death()
     {
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             isDead = true;
         }
