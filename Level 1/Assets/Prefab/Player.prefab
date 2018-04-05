@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 95412581552184968}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675457111063612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -58.9, y: 0.24, z: 0}
+  m_LocalPosition: {x: -58.1, y: -20.34, z: 0}
   m_LocalScale: {x: 7.024525, y: 6.009307, z: 1}
   m_Children:
   - {fileID: 4283808395293122}
@@ -277,7 +277,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.010008916, y: 0.0007724166}
   m_SpriteTilingProperty:
@@ -336,10 +336,6 @@ MonoBehaviour:
     m_Bits: 256
   teleDistance: 10000
   dashSpeed: 30
-  wallCheckPoint: {fileID: 4755654041596694}
-  wallLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!212 &212291016369808464
 SpriteRenderer:
   m_ObjectHideFlags: 1

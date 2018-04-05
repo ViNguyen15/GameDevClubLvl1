@@ -42,12 +42,6 @@ public class Control : MonoBehaviour {
     private bool teleButton;
     private bool dashButton;
 
-    //wall prototype
-    [SerializeField]
-    private Transform wallCheckPoint;
-    [SerializeField]
-    private LayerMask wallLayerMask;
-
     private bool wallSliding;
     private bool wallCheck;
 
@@ -99,12 +93,17 @@ public class Control : MonoBehaviour {
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
+
+      
         isGrounded = IsGrounded();
         onWall = OnWall();
-        Movement(horizontal);
+        Movement(horizontal, vertVelocity);
 
-       // Debug.Log(onWall + " On Wall");
-       // Debug.Log(isGrounded + " Grounded");
+
+
+        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(isGrounded + " Grounded");
     }
 
 
@@ -112,12 +111,13 @@ public class Control : MonoBehaviour {
     void Update () {
 
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
         HandleInput();
 
         //Animation
-        float vertVelocity = myRigidBody.velocity.y;
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
+
     }
 
     private void LateUpdate()
@@ -126,7 +126,7 @@ public class Control : MonoBehaviour {
 
     }
 
-    private void Movement(float horizontal)
+    private void Movement(float horizontal, float vertVelocity)
     {
         //Horizontal Movement
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);

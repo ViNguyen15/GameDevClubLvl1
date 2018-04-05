@@ -80,15 +80,12 @@ public class FloatBug : MonoBehaviour {
             scale.x *= -1;
             transform.localScale = scale;
             facingRight = false;
-            Debug.Log("Turn Left");
         }
         if (horizontal < 0 && !facingRight)
         {
             scale.x *= -1;
             transform.localScale = scale;
             facingRight = true;
-            Debug.Log("Turn right");
-
         }
 
     }
