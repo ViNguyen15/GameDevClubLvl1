@@ -27,20 +27,20 @@ public class Control : MonoBehaviour {
     private float time;
     private float dashTime = 0.5f;
 
+    //health
+    private int startingHealth = 100;
+    private int currentHealth;
+    private bool isDead;
+    private bool damage;
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool onWall;
+
     //button inputs
     private bool jumpButton;
     private bool teleButton;
     private bool dashButton;
-
-    //wall prototype
-    [SerializeField]
-    private Transform wallCheckPoint;
-    [SerializeField]
-    private LayerMask wallLayerMask;
 
     private bool wallSliding;
     private bool wallCheck;
@@ -49,23 +49,61 @@ public class Control : MonoBehaviour {
     private bool facingRight;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
 
         myRigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingRight = true;
-		
-	}
+
+        //initialing starting health
+        currentHealth = startingHealth;
+
+    }
+
+    //health ...I feel like I definitely messed up in here
+    public class Health {
+        private int currentHealth;
+    
+    public int getHealth()
+    {
+        return this.currentHealth;
+    }
+
+    public void getHealth(int health)
+    {
+        this.currentHealth = health;
+    }
+}
+
+    //thought i could do something
+    public void TakeDamage()
+    {
+
+    }
+
+    //death ...Feel a little off
+    public void Death()
+    {
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        }
+    }
 
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
+
+      
         isGrounded = IsGrounded();
         onWall = OnWall();
-        Movement(horizontal);
+        Movement(horizontal, vertVelocity);
 
-       // Debug.Log(onWall + " On Wall");
-       // Debug.Log(isGrounded + " Grounded");
+
+
+        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(isGrounded + " Grounded");
     }
 
 
@@ -73,12 +111,13 @@ public class Control : MonoBehaviour {
     void Update () {
 
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
         HandleInput();
 
         //Animation
-        float vertVelocity = myRigidBody.velocity.y;
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
+
     }
 
     private void LateUpdate()
@@ -87,7 +126,7 @@ public class Control : MonoBehaviour {
 
     }
 
-    private void Movement(float horizontal)
+    private void Movement(float horizontal, float vertVelocity)
     {
         //Horizontal Movement
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
@@ -220,7 +259,7 @@ public class Control : MonoBehaviour {
             facingRight = true;
         }
     }
-
+    
 
     private bool IsGrounded()
     {
