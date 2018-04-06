@@ -16,14 +16,14 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private Transform[] wallPoints;
     [SerializeField]
-    private float groundRadius;
-    [SerializeField]
     private LayerMask isGround;
     [SerializeField]
     private float teleDistance;
     [SerializeField]
     private float dashSpeed;
 
+
+    private float groundRadius = 0.1f;
     private float time;
     private float dashTime = 0.5f;
 
@@ -35,18 +35,22 @@ public class Control : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
-    private bool onWall;
 
     //button inputs
     private bool jumpButton;
     private bool teleButton;
     private bool dashButton;
 
-    private bool wallSliding;
+    //wall interaction
+    private bool onWall;
     private bool wallCheck;
 
-
     private bool facingRight;
+
+    //Power Ups
+    private bool dashUp;
+    private bool teleUp;
+    private bool wallJumpUp;
 
     // Use this for initialization
     void Start() {
@@ -54,6 +58,8 @@ public class Control : MonoBehaviour {
         myRigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingRight = true;
+        dashUp = false;
+        teleUp = false;
 
         //initialing starting health
         currentHealth = startingHealth;
@@ -133,7 +139,9 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
+            //SoundManagerScript.PlaySound("walk");
             animator.SetBool("Walking", true);
+            
         }
         else
         {
@@ -143,7 +151,7 @@ public class Control : MonoBehaviour {
 
 
         //Jump
-        if (isGrounded && jumpButton && !wallSliding)
+        if (isGrounded && jumpButton && !onWall)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
             SoundManagerScript.PlaySound("jump");
@@ -151,25 +159,29 @@ public class Control : MonoBehaviour {
         }
 
         //Teleport
-        if (teleButton)
+        if (teleButton && teleUp)
         {
             if (facingRight)
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
         }
 
         //Dashing
         if (dashButton)
         {
+
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+            
         }
 
 
@@ -202,18 +214,20 @@ public class Control : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             jumpButton = true;
+
         }
         //Teleport
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && teleUp)
         {
             teleButton = true;
         }
         //Dashing
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && dashUp)
         {
             dashButton = true;
         }
     }
+
 
     IEnumerator Dash()
     {
@@ -225,20 +239,25 @@ public class Control : MonoBehaviour {
                 {
                     myRigidBody.velocity = new Vector2(dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
+                   // Debug.Log(time);
                 }
                 if (!facingRight)
                 {
                     myRigidBody.velocity = new Vector2(-dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
-                }
-
+                   // Debug.Log(time);
+                }       
                 if (time > dashTime)
                 {
                     dashButton = false;
                 }
+
             yield return null;
-            }
-       // animator.SetBool("Dashing", false);
+
+
+        }
+        // animator.SetBool("Dashing", false);
+
     }
 
 
@@ -304,5 +323,15 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public void enableTeleUp()
+    {
+        teleUp = true;
+    }
+
+    public void enableDashUp()
+    {
+        dashUp = true;
     }
 }
