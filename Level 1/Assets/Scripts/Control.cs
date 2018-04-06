@@ -16,56 +16,101 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private Transform[] wallPoints;
     [SerializeField]
-    private float groundRadius;
-    [SerializeField]
     private LayerMask isGround;
     [SerializeField]
     private float teleDistance;
     [SerializeField]
     private float dashSpeed;
 
+
+    private float groundRadius = 0.1f;
     private float time;
     private float dashTime = 0.5f;
 
+    //health
+    private int startingHealth = 100;
+    private int currentHealth;
+    private bool isDead;
+    private bool damage;
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
     private bool onWall;
+
     //button inputs
     private bool jumpButton;
     private bool teleButton;
     private bool dashButton;
 
-    //wall prototype
-    [SerializeField]
-    private Transform wallCheckPoint;
-    [SerializeField]
-    private LayerMask wallLayerMask;
-
+    //wall interaction
     private bool wallSliding;
     private bool wallCheck;
 
-
     private bool facingRight;
 
+    //Power Ups
+    private bool dashUp;
+    private bool teleUp;
+    private bool wallJumpUp;
+
     // Use this for initialization
-    void Start () {
+    void Start() {
 
         myRigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingRight = true;
-		
-	}
+        dashUp = false;
+        teleUp = false;
+
+        //initialing starting health
+        currentHealth = startingHealth;
+
+    }
+
+    //health ...I feel like I definitely messed up in here
+    public class Health {
+        private int currentHealth;
+    
+    public int getHealth()
+    {
+        return this.currentHealth;
+    }
+
+    public void getHealth(int health)
+    {
+        this.currentHealth = health;
+    }
+}
+
+    //thought i could do something
+    public void TakeDamage()
+    {
+
+    }
+
+    //death ...Feel a little off
+    public void Death()
+    {
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        }
+    }
 
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
+
+      
         isGrounded = IsGrounded();
         onWall = OnWall();
-        Movement(horizontal);
+        Movement(horizontal, vertVelocity);
 
-        Debug.Log(onWall + " On Wall");
-        Debug.Log(isGrounded + " Grounded");
+
+
+        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(isGrounded + " Grounded");
     }
 
 
@@ -73,12 +118,13 @@ public class Control : MonoBehaviour {
     void Update () {
 
         float horizontal = Input.GetAxis("Horizontal");
+        float vertVelocity = myRigidBody.velocity.y;
         HandleInput();
 
         //Animation
-        float vertVelocity = myRigidBody.velocity.y;
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
+
     }
 
     private void LateUpdate()
@@ -87,14 +133,16 @@ public class Control : MonoBehaviour {
 
     }
 
-    private void Movement(float horizontal)
+    private void Movement(float horizontal, float vertVelocity)
     {
         //Horizontal Movement
         myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
         //Animation for walking
         if (horizontal != 0)
         {
+            //SoundManagerScript.PlaySound("walk");
             animator.SetBool("Walking", true);
+            
         }
         else
         {
@@ -112,30 +160,34 @@ public class Control : MonoBehaviour {
         }
 
         //Teleport
-        if (teleButton)
+        if (teleButton && teleUp)
         {
             if (facingRight)
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
         }
 
         //Dashing
         if (dashButton)
         {
+
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+            
         }
 
 
         //WallJump
-        if (!isGrounded && jumpButton && onWall)
+        if (!isGrounded && jumpButton && onWall && wallJumpUp)
         {
             if(facingRight)
             {
@@ -156,25 +208,27 @@ public class Control : MonoBehaviour {
         }
     }
 
-    public void HandleInput()
+    private void HandleInput()
     {
 
         //Jump
         if (Input.GetButtonDown("Jump"))
         {
             jumpButton = true;
+
         }
         //Teleport
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && teleUp)
         {
             teleButton = true;
         }
         //Dashing
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && dashUp)
         {
             dashButton = true;
         }
     }
+
 
     IEnumerator Dash()
     {
@@ -186,20 +240,25 @@ public class Control : MonoBehaviour {
                 {
                     myRigidBody.velocity = new Vector2(dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
+                   // Debug.Log(time);
                 }
                 if (!facingRight)
                 {
                     myRigidBody.velocity = new Vector2(-dashSpeed, myRigidBody.velocity.y);
                     time += Time.deltaTime;
-                }
-
+                   // Debug.Log(time);
+                }       
                 if (time > dashTime)
                 {
                     dashButton = false;
                 }
+
             yield return null;
-            }
-       // animator.SetBool("Dashing", false);
+
+
+        }
+        // animator.SetBool("Dashing", false);
+
     }
 
 
@@ -220,7 +279,7 @@ public class Control : MonoBehaviour {
             facingRight = true;
         }
     }
-
+    
 
     private bool IsGrounded()
     {
@@ -265,5 +324,15 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public void enableTeleUp()
+    {
+        teleUp = true;
+    }
+
+    public void enableDashUp()
+    {
+        dashUp = true;
     }
 }

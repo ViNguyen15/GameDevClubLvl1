@@ -237,7 +237,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraControler.cs" />
     <Compile Include="Assets\Scripts\Control.cs" />
-    <Compile Include="Assets\SoundManagerScript.cs" />
+    <Compile Include="Assets\Scripts\EnableBlink.cs" />
+    <Compile Include="Assets\Scripts\EnableDash.cs" />
+    <Compile Include="Assets\Scripts\FloatBug.cs" />
+    <Compile Include="Assets\Scripts\PlatformCollision.cs" />
+    <Compile Include="Assets\Scripts\PlatformMovement.cs" />
+    <Compile Include="Assets\Scripts\SoundManagerScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
