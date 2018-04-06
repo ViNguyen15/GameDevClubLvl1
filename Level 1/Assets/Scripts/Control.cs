@@ -94,7 +94,9 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
+            SoundManagerScript.PlaySound("walk");
             animator.SetBool("Walking", true);
+            
         }
         else
         {
@@ -118,19 +120,23 @@ public class Control : MonoBehaviour {
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
+                SoundManagerScript.PlaySound("teleport");
             }
         }
 
         //Dashing
         if (dashButton)
         {
+
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+            
         }
 
 
@@ -163,6 +169,7 @@ public class Control : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             jumpButton = true;
+
         }
         //Teleport
         if (Input.GetButtonDown("Fire2"))
