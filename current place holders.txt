@@ -1,0 +1,9 @@
+-background sound
+-walking sound
+-jump sound
+-dash sound
+-player sprite
+-enemy sprite
+-platforms
+-power blocks
+-

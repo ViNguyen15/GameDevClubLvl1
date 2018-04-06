@@ -35,7 +35,6 @@ public class Control : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
-    private bool onWall;
 
     //button inputs
     private bool jumpButton;
@@ -43,7 +42,7 @@ public class Control : MonoBehaviour {
     private bool dashButton;
 
     //wall interaction
-    private bool wallSliding;
+    private bool onWall;
     private bool wallCheck;
 
     private bool facingRight;
@@ -152,7 +151,7 @@ public class Control : MonoBehaviour {
 
 
         //Jump
-        if (isGrounded && jumpButton && !wallSliding)
+        if (isGrounded && jumpButton && !onWall)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
             SoundManagerScript.PlaySound("jump");
@@ -187,7 +186,7 @@ public class Control : MonoBehaviour {
 
 
         //WallJump
-        if (!isGrounded && jumpButton && onWall && wallJumpUp)
+        if (!isGrounded && jumpButton && onWall)
         {
             if(facingRight)
             {
