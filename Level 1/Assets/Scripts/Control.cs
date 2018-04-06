@@ -140,7 +140,7 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
-            SoundManagerScript.PlaySound("walk");
+            //SoundManagerScript.PlaySound("walk");
             animator.SetBool("Walking", true);
             
         }
