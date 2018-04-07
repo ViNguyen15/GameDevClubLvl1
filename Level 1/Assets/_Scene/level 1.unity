@@ -821,6 +821,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114691783297439422, guid: fbf61316c470cb84d993dc4aa98eb27d,
+        type: 2}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 1542229770}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
   m_IsPrefabParent: 0
@@ -1373,6 +1378,12 @@ Transform:
   m_Father: {fileID: 1610548735}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542229770 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114544577009201468, guid: 5ecaf41f8763b1f45835517e61935646,
+    type: 2}
+  m_PrefabInternal: {fileID: 2066361034}
+  m_Script: {fileID: 11500000, guid: 9f9ecd21c9b913940a4c755a5939913d, type: 3}
 --- !u!1001 &1550025712
 Prefab:
   m_ObjectHideFlags: 0

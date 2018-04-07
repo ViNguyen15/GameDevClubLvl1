@@ -6,6 +6,7 @@ using UnityEngine;
 public class Control : MonoBehaviour {
 
     Animator animator;
+    public SoundManagerScript sound;
 
     [SerializeField]
     private float moveSpeed;
@@ -139,7 +140,7 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
-            //SoundManagerScript.PlaySound("walk");
+            //sound.PlayAudio("walk");
             animator.SetBool("Walking", true);
             
         }
@@ -212,20 +213,20 @@ public class Control : MonoBehaviour {
         //Jump
         if (Input.GetButtonDown("Jump"))
         {
-            SoundManagerScript.PlaySound("jump");
+            sound.PlaySound("jump");
             jumpButton = true;
 
         }
         //Teleport
         if (Input.GetButtonDown("Fire2") && teleUp)
         {
-            SoundManagerScript.PlaySound("teleport");
+            sound.PlaySound("teleport");
             teleButton = true;
         }
         //Dashing
         if (Input.GetButtonDown("Fire1") && !dashButton && dashUp)
         {
-            SoundManagerScript.PlaySound("dash");
+            sound.PlaySound("dash");
             dashButton = true;
         }
     }
@@ -325,6 +326,11 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
     }
 
     public void enableTeleUp()
