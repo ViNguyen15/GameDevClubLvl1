@@ -7,13 +7,13 @@ public class SoundManagerScript : MonoBehaviour {
     public static AudioClip jumpSound, walkSound,dashSound, teleportSound;
     static AudioSource audioSrc;
     //walking 
-    CharacterController cc;
+    public Control player;
+
     // Use this for initialization
-    
     void Start ()
     {
         walkSound = Resources.Load<AudioClip>("walk(cut)");
-        jumpSound = Resources.Load<AudioClip>("jump(cut)");
+        jumpSound = Resources.Load<AudioClip>("jump");
         dashSound = Resources.Load<AudioClip>("dash(cut)");
         audioSrc = GetComponent<AudioSource>();
         
@@ -37,6 +37,9 @@ public class SoundManagerScript : MonoBehaviour {
             case "teleport":
                 audioSrc.PlayOneShot(teleportSound);
                 break;
+            case "dash":
+                audioSrc.PlayOneShot(dashSound);
+                break;
             
 
         }
@@ -46,4 +49,27 @@ public class SoundManagerScript : MonoBehaviour {
             audioSrc.Play();
         }
     }
-}
+
+    /*
+    public void PlayAudio(string clips)
+    {
+
+        if (mPlayer.getIsGrounded())
+        {
+            if (!audioSrc.isPlaying)
+            {
+                audioSrc.clip = walkSound;
+                audioSrc.Play();
+            }
+        }
+        else
+        {
+            audioSrc.Stop();
+        }
+
+    */
+
+
+
+
+    }

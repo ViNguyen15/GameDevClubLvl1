@@ -154,7 +154,6 @@ public class Control : MonoBehaviour {
         if (isGrounded && jumpButton && !onWall)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
-            SoundManagerScript.PlaySound("jump");
             jumpButton = false;
         }
 
@@ -165,13 +164,11 @@ public class Control : MonoBehaviour {
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
         }
 
@@ -181,6 +178,7 @@ public class Control : MonoBehaviour {
 
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+
             
         }
 
@@ -204,6 +202,7 @@ public class Control : MonoBehaviour {
         if (onWall)
         {
             myRigidBody.velocity = new Vector2(0, -3f);
+
         }
     }
 
@@ -213,17 +212,20 @@ public class Control : MonoBehaviour {
         //Jump
         if (Input.GetButtonDown("Jump"))
         {
+            SoundManagerScript.PlaySound("jump");
             jumpButton = true;
 
         }
         //Teleport
         if (Input.GetButtonDown("Fire2") && teleUp)
         {
+            SoundManagerScript.PlaySound("teleport");
             teleButton = true;
         }
         //Dashing
-        if (Input.GetButtonDown("Fire1") && dashUp)
+        if (Input.GetButtonDown("Fire1") && !dashButton && dashUp)
         {
+            SoundManagerScript.PlaySound("dash");
             dashButton = true;
         }
     }
@@ -233,7 +235,7 @@ public class Control : MonoBehaviour {
     {
             time = 0;
 
-            while (time < dashTime)
+        while (time < dashTime)
             {
                 if (facingRight)
                 {
