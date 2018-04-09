@@ -24,7 +24,7 @@ public class Control : MonoBehaviour {
     private float dashSpeed;
 
 
-    private float groundRadius = 0.1f;
+    private float groundRadius = 0.2f;
     private float time;
     private float dashTime = 0.5f;
 
@@ -211,7 +211,7 @@ public class Control : MonoBehaviour {
     {
 
         //Jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && (isGrounded || onWall))
         {
             sound.PlaySound("jump");
             jumpButton = true;
@@ -331,6 +331,11 @@ public class Control : MonoBehaviour {
     public bool getIsGrounded()
     {
         return isGrounded;
+    }
+
+    public bool getFacingRight()
+    {
+        return facingRight;
     }
 
     public void enableTeleUp()
