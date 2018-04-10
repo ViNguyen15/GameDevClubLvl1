@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class EnableDash : MonoBehaviour {
 
-    public Control player;
+    private Control player;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        player = Object.FindObjectOfType<Control>();
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

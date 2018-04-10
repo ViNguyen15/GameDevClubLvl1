@@ -6,6 +6,8 @@ using UnityEngine;
 public class Control : MonoBehaviour {
 
     Animator animator;
+    public SoundManagerScript sound;
+    public Rigidbody2D bullet;
 
     [SerializeField]
     private float moveSpeed;
@@ -23,7 +25,7 @@ public class Control : MonoBehaviour {
     private float dashSpeed;
 
 
-    private float groundRadius = 0.1f;
+    private float groundRadius = 0.2f;
     private float time;
     private float dashTime = 0.5f;
 
@@ -67,9 +69,6 @@ public class Control : MonoBehaviour {
     }
 
     //health ...I feel like I definitely messed up in here
-    public class Health {
-        private int currentHealth;
-    
     public int getHealth()
     {
         return this.currentHealth;
@@ -79,7 +78,7 @@ public class Control : MonoBehaviour {
     {
         this.currentHealth = health;
     }
-}
+
 
     //thought i could do something
     public void TakeDamage()
@@ -108,7 +107,7 @@ public class Control : MonoBehaviour {
 
 
 
-        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(teleUp);
         // Debug.Log(isGrounded + " Grounded");
     }
 
@@ -139,7 +138,7 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
-            //SoundManagerScript.PlaySound("walk");
+            //sound.PlayAudio("walk");
             animator.SetBool("Walking", true);
             
         }
@@ -154,7 +153,6 @@ public class Control : MonoBehaviour {
         if (isGrounded && jumpButton && !onWall)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
-            SoundManagerScript.PlaySound("jump");
             jumpButton = false;
         }
 
@@ -165,13 +163,11 @@ public class Control : MonoBehaviour {
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
         }
 
@@ -181,6 +177,7 @@ public class Control : MonoBehaviour {
 
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+
             
         }
 
@@ -204,6 +201,7 @@ public class Control : MonoBehaviour {
         if (onWall)
         {
             myRigidBody.velocity = new Vector2(0, -3f);
+
         }
     }
 
@@ -211,20 +209,51 @@ public class Control : MonoBehaviour {
     {
 
         //Jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && (isGrounded || onWall))
         {
+            sound.PlaySound("jump");
             jumpButton = true;
 
         }
         //Teleport
         if (Input.GetButtonDown("Fire2") && teleUp)
         {
+            sound.PlaySound("teleport");
             teleButton = true;
         }
         //Dashing
-        if (Input.GetButtonDown("Fire1") && dashUp)
+        if (Input.GetButtonDown("Fire1") && !dashButton && dashUp)
         {
+            sound.PlaySound("dash");
             dashButton = true;
+        }
+        //Shooting
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+        Rigidbody2D bulletClone = (Rigidbody2D)Instantiate(bullet, transform.position, transform.rotation);
+        if (facingRight)
+        {
+            bulletClone.velocity = new Vector2(dashSpeed, 0);
+            if (onWall)
+            {
+                bulletClone.velocity = new Vector2(-dashSpeed, 0);
+            }
+        }
+        if (!facingRight)
+        {
+            bulletClone.velocity = new Vector2(-dashSpeed, 0);
+            if (onWall)
+            {
+                bulletClone.velocity = new Vector2(dashSpeed, 0);
+            }
+
+
         }
     }
 
@@ -233,7 +262,7 @@ public class Control : MonoBehaviour {
     {
             time = 0;
 
-            while (time < dashTime)
+        while (time < dashTime)
             {
                 if (facingRight)
                 {
@@ -323,6 +352,16 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public bool getFacingRight()
+    {
+        return facingRight;
     }
 
     public void enableTeleUp()

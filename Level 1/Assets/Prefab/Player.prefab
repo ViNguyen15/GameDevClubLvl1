@@ -212,7 +212,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675457111063612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -56.9, y: -18.02, z: 0}
+  m_LocalPosition: {x: -69.33, y: 5.61, z: 0}
   m_LocalScale: {x: 7.024525, y: 6.009307, z: 1}
   m_Children:
   - {fileID: 4283808395293122}
@@ -378,6 +378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b07b1dd27dd9f44aad9a1cee255a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound: {fileID: 114544577009201468, guid: 5ecaf41f8763b1f45835517e61935646, type: 2}
+  bullet: {fileID: 50365428574146704, guid: 3399ddffd6dd0504a82557328ce9855c, type: 2}
   moveSpeed: 10
   jumpForce: 1100
   groundPoints:
