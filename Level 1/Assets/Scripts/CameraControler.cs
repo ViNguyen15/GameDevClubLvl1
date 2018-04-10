@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class CameraControler : MonoBehaviour {
 
-    public Control player;
-
-    [SerializeField]
+    private GameObject player;
+    private Control playerScript;
     private Transform target;
-    [SerializeField]
-    private float smoothSpeed = 0.25f;
+
     [SerializeField]
     private Vector3 offset;
     [SerializeField]
     private Vector3 offsetR;
 
+    private float smoothSpeed = 4f;
+
+
 
     // Use this for initialization
     void Start () {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = (Control)player.GetComponent(typeof(Control));
+        target = player.transform;
 
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
@@ -35,7 +39,7 @@ public class CameraControler : MonoBehaviour {
     private void moveCamera()
     {
 
-        bool facingRight = player.getFacingRight();
+        bool facingRight = playerScript.getFacingRight();
 
 
         Vector3 desiredposition;

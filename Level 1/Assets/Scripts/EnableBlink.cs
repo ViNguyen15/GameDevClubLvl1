@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnableBlink : MonoBehaviour {
 
-    public Control player;
+    private Control player;
 
 
     // Use this for initialization
     void Start () {
-		
+        player = Object.FindObjectOfType<Control>();
+
 	}
 	
 	// Update is called once per frame

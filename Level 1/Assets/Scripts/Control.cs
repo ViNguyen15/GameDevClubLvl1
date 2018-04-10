@@ -7,6 +7,7 @@ public class Control : MonoBehaviour {
 
     Animator animator;
     public SoundManagerScript sound;
+    public Rigidbody2D bullet;
 
     [SerializeField]
     private float moveSpeed;
@@ -68,9 +69,6 @@ public class Control : MonoBehaviour {
     }
 
     //health ...I feel like I definitely messed up in here
-    public class Health {
-        private int currentHealth;
-    
     public int getHealth()
     {
         return this.currentHealth;
@@ -80,7 +78,7 @@ public class Control : MonoBehaviour {
     {
         this.currentHealth = health;
     }
-}
+
 
     //thought i could do something
     public void TakeDamage()
@@ -109,7 +107,7 @@ public class Control : MonoBehaviour {
 
 
 
-        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(teleUp);
         // Debug.Log(isGrounded + " Grounded");
     }
 
@@ -228,6 +226,34 @@ public class Control : MonoBehaviour {
         {
             sound.PlaySound("dash");
             dashButton = true;
+        }
+        //Shooting
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+        Rigidbody2D bulletClone = (Rigidbody2D)Instantiate(bullet, transform.position, transform.rotation);
+        if (facingRight)
+        {
+            bulletClone.velocity = new Vector2(dashSpeed, 0);
+            if (onWall)
+            {
+                bulletClone.velocity = new Vector2(-dashSpeed, 0);
+            }
+        }
+        if (!facingRight)
+        {
+            bulletClone.velocity = new Vector2(-dashSpeed, 0);
+            if (onWall)
+            {
+                bulletClone.velocity = new Vector2(dashSpeed, 0);
+            }
+
+
         }
     }
 
