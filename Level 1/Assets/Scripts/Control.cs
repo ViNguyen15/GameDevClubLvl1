@@ -30,10 +30,12 @@ public class Control : MonoBehaviour {
     private float dashTime = 0.5f;
 
     //health
-    private int startingHealth = 100;
+    private int startingHealth = 50;
     private int currentHealth;
     private bool isDead;
     private bool damage;
+
+    private FloatBug enemy;
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
@@ -63,12 +65,12 @@ public class Control : MonoBehaviour {
         dashUp = false;
         teleUp = false;
 
-        //initialing starting health
+        //initializing starting health
         currentHealth = startingHealth;
 
     }
 
-    //health ...I feel like I definitely messed up in here
+    //health
     public int getHealth()
     {
         return this.currentHealth;
@@ -79,22 +81,27 @@ public class Control : MonoBehaviour {
         this.currentHealth = health;
     }
 
-
-    //thought i could do something
-    public void TakeDamage()
+    //taking damage
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-
-    }
-
-    //death ...Feel a little off
-    public void Death()
-    {
-        if (currentHealth <= 0)
+        // If the player has health to lose...
+        if (currentHealth > 0 && collision.gameObject.tag == "Enemy")
         {
-            isDead = true;
+  
+            currentHealth -= 30; //enemy.AttackDamage() isnt working
+
+            //Debug.Log(currentHealth);
+
+            if (currentHealth <= 0)
+            {
+                isDead = true;
+                Destroy(gameObject);
+            }
         }
     }
 
+
+    
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -104,7 +111,6 @@ public class Control : MonoBehaviour {
         isGrounded = IsGrounded();
         onWall = OnWall();
         Movement(horizontal, vertVelocity);
-
 
 
         // Debug.Log(teleUp);
@@ -123,6 +129,7 @@ public class Control : MonoBehaviour {
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
 
+        //Debug.Log(currentHealth);
     }
 
     private void LateUpdate()

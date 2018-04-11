@@ -15,11 +15,14 @@ public class FloatBug : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
 
+    //health
+    private int startingHealth = 10;
+    private int currentHealth;
+    private bool isDead;
+    private bool damage;
 
     private bool facingRight;
     private bool isGrounded;
-
-
 
 
     // Use this for initialization
@@ -28,13 +31,15 @@ public class FloatBug : MonoBehaviour {
         myRigidBody = GetComponent<Rigidbody2D>();
         facingRight = true;
 
+        //initializing starting health
+        currentHealth = startingHealth;
+
     }
 
     // Update is called once per frame
     void Update () {
-
-		
-	}
+        
+    }
 
     private void FixedUpdate()
     {
@@ -66,6 +71,29 @@ public class FloatBug : MonoBehaviour {
                 Flip(horizontal);
             }
 
+        }
+
+    }
+
+    //Dealing Damage
+     public int AttackDamage()
+    {
+        return 10;
+    }
+
+    //taking damage
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (currentHealth > 0 && collision.gameObject.tag == "Bullet")
+        {
+            // ... damage the enemy.
+            currentHealth -= 5;
+
+            if (currentHealth <= 0)
+            {
+                isDead = true;
+                Destroy(gameObject);
+            }
         }
 
     }

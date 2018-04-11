@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 169725302}
   m_Layer: 8
   m_Name: EnBug
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1494,7 +1494,7 @@ GameObject:
   - component: {fileID: 1610548735}
   m_Layer: 8
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2071,11 +2071,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -57.21
+      value: -57.7
       objectReference: {fileID: 0}
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.17
+      value: -18.06
       objectReference: {fileID: 0}
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.z
