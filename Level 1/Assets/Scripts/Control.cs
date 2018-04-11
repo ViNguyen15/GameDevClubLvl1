@@ -332,7 +332,6 @@ public class Control : MonoBehaviour {
                         return true;
                     }
                 }
-
             }
         }
         animator.SetBool("Grounded", false);

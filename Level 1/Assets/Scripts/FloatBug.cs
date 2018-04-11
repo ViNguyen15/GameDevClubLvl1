@@ -31,12 +31,12 @@ public class FloatBug : MonoBehaviour {
         myRigidBody = GetComponent<Rigidbody2D>();
         facingRight = true;
 
-        //initializing starting health
+     //initializing starting health
         currentHealth = startingHealth;
 
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update () {
         
     }
