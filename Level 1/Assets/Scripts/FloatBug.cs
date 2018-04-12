@@ -31,7 +31,7 @@ public class FloatBug : MonoBehaviour {
         myRigidBody = GetComponent<Rigidbody2D>();
         facingRight = true;
 
-     //initializing starting health
+        //initializing starting health
         currentHealth = startingHealth;
 
     }
@@ -77,14 +77,14 @@ public class FloatBug : MonoBehaviour {
 
     //Dealing Damage
      public int AttackDamage()
-    {
+     {
         return 10;
-    }
+     }
 
     //taking damage
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (currentHealth > 0 && collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet")
         {
             // ... damage the enemy.
             currentHealth -= 5;

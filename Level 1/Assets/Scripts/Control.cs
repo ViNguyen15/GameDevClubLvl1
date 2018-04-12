@@ -9,6 +9,8 @@ public class Control : MonoBehaviour {
     public SoundManagerScript sound;
     public Rigidbody2D bullet;
 
+    private GameObject cObject;
+
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
@@ -30,8 +32,8 @@ public class Control : MonoBehaviour {
     private float dashTime = 0.5f;
 
     //health
-    private int startingHealth = 50;
-    private int currentHealth;
+    private float startingHealth = 50f;
+    private float currentHealth;
     private bool isDead;
     private bool damage;
 
@@ -71,12 +73,12 @@ public class Control : MonoBehaviour {
     }
 
     //health
-    public int getHealth()
+    public float getHealth()
     {
         return this.currentHealth;
     }
 
-    public void getHealth(int health)
+    public void getHealth(float health)
     {
         this.currentHealth = health;
     }
@@ -87,10 +89,12 @@ public class Control : MonoBehaviour {
         // If the player has health to lose...
         if (currentHealth > 0 && collision.gameObject.tag == "Enemy")
         {
-  
-            currentHealth -= 30; //enemy.AttackDamage() isnt working
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<FloatBug>().AttackDamage();
 
-            //Debug.Log(currentHealth);
+            currentHealth -= dmg; //enemy.AttackDamage() isnt working
+
+            Debug.Log(currentHealth);
 
             if (currentHealth <= 0)
             {
@@ -100,8 +104,13 @@ public class Control : MonoBehaviour {
         }
     }
 
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        cObject = null;
+    }
 
-    
+
+
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
