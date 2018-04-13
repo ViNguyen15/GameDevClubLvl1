@@ -4,28 +4,60 @@ using UnityEngine;
 
 public class CameraControler : MonoBehaviour {
 
-    [SerializeField]
+    private GameObject player;
+    private Control playerScript;
     private Transform target;
-    [SerializeField]
-    private float smoothSpeed = 0.25f;
+
     [SerializeField]
     private Vector3 offset;
+    [SerializeField]
+    private Vector3 offsetR;
+
+    private float smoothSpeed = 4f;
+
+
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = (Control)player.GetComponent(typeof(Control));
+        target = player.transform;
+
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
     void FixedUpdate()
     {
-        Vector3 desiredposition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredposition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothedPosition;
+        moveCamera();
+    }
+
+    private void moveCamera()
+    {
+
+        bool facingRight = playerScript.getFacingRight();
+
+
+        Vector3 desiredposition;
+
+        if (facingRight)
+        {
+            desiredposition = target.position + offset;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredposition, smoothSpeed * Time.deltaTime);
+            transform.position = smoothedPosition;
+        }
+        if (!facingRight)
+        {
+            desiredposition = target.position + offsetR;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredposition, smoothSpeed * Time.deltaTime);
+            transform.position = smoothedPosition;
+        }
+
+
 
     }
 }

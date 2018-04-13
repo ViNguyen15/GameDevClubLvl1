@@ -6,6 +6,9 @@ using UnityEngine;
 public class Control : MonoBehaviour {
 
     Animator animator;
+    public SoundManagerScript sound;
+
+    private GameObject cObject;
 
     [SerializeField]
     private float moveSpeed;
@@ -21,17 +24,21 @@ public class Control : MonoBehaviour {
     private float teleDistance;
     [SerializeField]
     private float dashSpeed;
+    [SerializeField]
+    private Rigidbody2D pBullet;
 
 
-    private float groundRadius = 0.1f;
+    private float groundRadius = 0.2f;
     private float time;
     private float dashTime = 0.5f;
 
     //health
-    private int startingHealth = 100;
-    private int currentHealth;
+    private float startingHealth = 50f;
+    private float currentHealth;
     private bool isDead;
     private bool damage;
+
+    private FloatBug enemy;
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
@@ -61,40 +68,80 @@ public class Control : MonoBehaviour {
         dashUp = false;
         teleUp = false;
 
-        //initialing starting health
+        //initializing starting health
         currentHealth = startingHealth;
 
     }
 
-    //health ...I feel like I definitely messed up in here
-    public class Health {
-        private int currentHealth;
-    
-    public int getHealth()
+    //health
+    public float getHealth()
     {
         return this.currentHealth;
     }
 
-    public void getHealth(int health)
+    public void getHealth(float health)
     {
         this.currentHealth = health;
     }
-}
 
-    //thought i could do something
-    public void TakeDamage()
+    //taking damage
+    public void OnCollisionEnter2D(Collision2D collision)
     {
+        // If the player has health to lose...
+        if (collision.gameObject.tag == "Enemy")
+        {
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
 
-    }
+            if(cObject != null)
+            {
+                currentHealth -= dmg;
+               // Debug.Log(currentHealth);
 
-    //death ...Feel a little off
-    public void Death()
-    {
+            }
+
+
+
+
+            /* teach me senpai, trying to make player jolt back when colliding with enemy
+            if (facingRight)
+            {
+                myRigidBody.AddForce(new Vector2(1, 1));
+            }
+            else
+            {
+                myRigidBody.AddForce(new Vector2(-1, 1));
+            }
+            */
+        }
+
+        if (collision.gameObject.tag == "EBullet")
+        {
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
+
+            if (cObject != null)
+            {
+                currentHealth -= dmg;
+                // Debug.Log(currentHealth);
+
+            }
+
+        }
+
         if (currentHealth <= 0)
         {
-            isDead = true;
+            //isDead = true;
+            Destroy(gameObject);
         }
     }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        cObject = null;
+    }
+
+
 
     private void FixedUpdate()
     {
@@ -107,8 +154,7 @@ public class Control : MonoBehaviour {
         Movement(horizontal, vertVelocity);
 
 
-
-        // Debug.Log(onWall + " On Wall");
+        // Debug.Log(teleUp);
         // Debug.Log(isGrounded + " Grounded");
     }
 
@@ -124,6 +170,7 @@ public class Control : MonoBehaviour {
         animator.SetFloat("YVelocity", vertVelocity);
         Flip(horizontal);
 
+        //Debug.Log(currentHealth);
     }
 
     private void LateUpdate()
@@ -139,7 +186,7 @@ public class Control : MonoBehaviour {
         //Animation for walking
         if (horizontal != 0)
         {
-            //SoundManagerScript.PlaySound("walk");
+            //sound.PlayAudio("walk");
             animator.SetBool("Walking", true);
             
         }
@@ -154,7 +201,6 @@ public class Control : MonoBehaviour {
         if (isGrounded && jumpButton && !onWall)
         {
             myRigidBody.AddForce(new Vector2(0, jumpForce));
-            SoundManagerScript.PlaySound("jump");
             jumpButton = false;
         }
 
@@ -165,13 +211,11 @@ public class Control : MonoBehaviour {
             {
                 myRigidBody.AddForce(new Vector2(teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
             else
             {
                 myRigidBody.AddForce(new Vector2(-teleDistance, 0));
                 teleButton = false;
-                SoundManagerScript.PlaySound("teleport");
             }
         }
 
@@ -181,6 +225,7 @@ public class Control : MonoBehaviour {
 
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
+
             
         }
 
@@ -204,6 +249,7 @@ public class Control : MonoBehaviour {
         if (onWall)
         {
             myRigidBody.velocity = new Vector2(0, -3f);
+
         }
     }
 
@@ -211,20 +257,51 @@ public class Control : MonoBehaviour {
     {
 
         //Jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && (isGrounded || onWall))
         {
+            sound.PlaySound("jump");
             jumpButton = true;
 
         }
         //Teleport
         if (Input.GetButtonDown("Fire2") && teleUp)
         {
+            sound.PlaySound("teleport");
             teleButton = true;
         }
         //Dashing
-        if (Input.GetButtonDown("Fire1") && dashUp)
+        if (Input.GetButtonDown("Fire1") && !dashButton && dashUp)
         {
+            sound.PlaySound("dash");
             dashButton = true;
+        }
+        //Shooting
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+        Rigidbody2D pBulletClone = (Rigidbody2D)Instantiate(pBullet, transform.position, transform.rotation);
+        if (facingRight)
+        {
+            pBulletClone.velocity = new Vector2(dashSpeed, 0);
+            if (onWall)
+            {
+                pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+            }
+        }
+        if (!facingRight)
+        {
+            pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+            if (onWall)
+            {
+                pBulletClone.velocity = new Vector2(dashSpeed, 0);
+            }
+
+
         }
     }
 
@@ -233,7 +310,7 @@ public class Control : MonoBehaviour {
     {
             time = 0;
 
-            while (time < dashTime)
+        while (time < dashTime)
             {
                 if (facingRight)
                 {
@@ -296,7 +373,6 @@ public class Control : MonoBehaviour {
                         return true;
                     }
                 }
-
             }
         }
         animator.SetBool("Grounded", false);
@@ -323,6 +399,16 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public bool getFacingRight()
+    {
+        return facingRight;
     }
 
     public void enableTeleUp()

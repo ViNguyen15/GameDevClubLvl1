@@ -2,34 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManagerScript : MonoBehaviour {
-    
-    public static AudioClip jumpSound, walkSound,dashSound, teleportSound;
+public class SoundManagerScript : MonoBehaviour
+{
+
+    public static AudioClip jumpSound, walkSound, dashSound, teleportSound;
     static AudioSource audioSrc;
     //walking 
-    CharacterController cc;
+    public Control mPlayer;
+    public bool grounded;
+
     // Use this for initialization
-    
-    void Start ()
+    void Start()
     {
         walkSound = Resources.Load<AudioClip>("walk(cut)");
-        jumpSound = Resources.Load<AudioClip>("jump(cut)");
+        jumpSound = Resources.Load<AudioClip>("jump");
         dashSound = Resources.Load<AudioClip>("dash(cut)");
+        teleportSound = Resources.Load<AudioClip>("teleport(cut)");
         audioSrc = GetComponent<AudioSource>();
-        
+
 
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        
-    }
-    
-    public static void PlaySound(string clip)
+
+    // Update is called once per frame
+    void Update()
     {
 
-        switch(clip)
+    }
+
+    public void PlaySound(string clip)
+    {
+
+        switch (clip)
         {
             case "jump":
                 audioSrc.PlayOneShot(jumpSound);
@@ -37,7 +40,10 @@ public class SoundManagerScript : MonoBehaviour {
             case "teleport":
                 audioSrc.PlayOneShot(teleportSound);
                 break;
-            
+            case "dash":
+                audioSrc.PlayOneShot(dashSound);
+                break;
+
 
         }
         if (!audioSrc.isPlaying)
@@ -46,4 +52,24 @@ public class SoundManagerScript : MonoBehaviour {
             audioSrc.Play();
         }
     }
+
+    /*
+    public void PlayAudio(string clips)
+    {
+
+        if (grounded)
+        {
+            if (!audioSrc.isPlaying)
+            {
+                audioSrc.clip = walkSound;
+                audioSrc.Play();
+            }
+        }
+        else
+        {
+            audioSrc.Stop();
+        }
+    }
+    */
+
 }
