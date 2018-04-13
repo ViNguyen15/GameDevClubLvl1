@@ -94,6 +94,17 @@ public class Control : MonoBehaviour {
 
             currentHealth -= dmg; //enemy.AttackDamage() isnt working
 
+            /* teach me senpai, trying to make player jolt back when colliding with enemy
+            if (facingRight)
+            {
+                myRigidBody.AddForce(new Vector2(1, 1));
+            }
+            else
+            {
+                myRigidBody.AddForce(new Vector2(-1, 1));
+            }
+            */
+
             Debug.Log(currentHealth);
 
             if (currentHealth <= 0)
