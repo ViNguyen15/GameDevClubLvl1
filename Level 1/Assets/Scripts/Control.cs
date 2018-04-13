@@ -7,7 +7,6 @@ public class Control : MonoBehaviour {
 
     Animator animator;
     public SoundManagerScript sound;
-    public Rigidbody2D bullet;
 
     private GameObject cObject;
 
@@ -25,6 +24,8 @@ public class Control : MonoBehaviour {
     private float teleDistance;
     [SerializeField]
     private float dashSpeed;
+    [SerializeField]
+    private Rigidbody2D pBullet;
 
 
     private float groundRadius = 0.2f;
@@ -100,6 +101,8 @@ public class Control : MonoBehaviour {
             }
 
 
+
+
             /* teach me senpai, trying to make player jolt back when colliding with enemy
             if (facingRight)
             {
@@ -110,13 +113,26 @@ public class Control : MonoBehaviour {
                 myRigidBody.AddForce(new Vector2(-1, 1));
             }
             */
+        }
 
+        if (collision.gameObject.tag == "EBullet")
+        {
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
 
-            if (currentHealth <= 0)
+            if (cObject != null)
             {
-                //isDead = true;
-                Destroy(gameObject);
+                currentHealth -= dmg;
+                // Debug.Log(currentHealth);
+
             }
+
+        }
+
+        if (currentHealth <= 0)
+        {
+            //isDead = true;
+            Destroy(gameObject);
         }
     }
 
@@ -268,21 +284,21 @@ public class Control : MonoBehaviour {
 
     private void Shoot()
     {
-        Rigidbody2D bulletClone = (Rigidbody2D)Instantiate(bullet, transform.position, transform.rotation);
+        Rigidbody2D pBulletClone = (Rigidbody2D)Instantiate(pBullet, transform.position, transform.rotation);
         if (facingRight)
         {
-            bulletClone.velocity = new Vector2(dashSpeed, 0);
+            pBulletClone.velocity = new Vector2(dashSpeed, 0);
             if (onWall)
             {
-                bulletClone.velocity = new Vector2(-dashSpeed, 0);
+                pBulletClone.velocity = new Vector2(-dashSpeed, 0);
             }
         }
         if (!facingRight)
         {
-            bulletClone.velocity = new Vector2(-dashSpeed, 0);
+            pBulletClone.velocity = new Vector2(-dashSpeed, 0);
             if (onWall)
             {
-                bulletClone.velocity = new Vector2(dashSpeed, 0);
+                pBulletClone.velocity = new Vector2(dashSpeed, 0);
             }
 
 
