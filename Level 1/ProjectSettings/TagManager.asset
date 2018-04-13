@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Enemy
   - Ground
+  - PBullet
+  - EBullet
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - 
   - Ground
   - Player
-  - 
+  - PBullet
   - 
   - 
   - 
