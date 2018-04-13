@@ -18,7 +18,7 @@ public class ShootBugController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       // ShootAtPlayer();
+      // ShootAtPlayer();
 	}
 
     private void OnTriggerEnter(Collider other)
