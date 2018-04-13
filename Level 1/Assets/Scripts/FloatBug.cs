@@ -14,10 +14,11 @@ public class FloatBug : MonoBehaviour {
     private LayerMask isGround;
 
     private Rigidbody2D myRigidBody;
+    private GameObject cObject;
 
     //health
-    private int startingHealth = 10;
-    private int currentHealth;
+    private float startingHealth = 10f;
+    private float currentHealth;
     private bool isDead;
     private bool damage;
 
@@ -84,14 +85,21 @@ public class FloatBug : MonoBehaviour {
     //taking damage
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "PBullet")
         {
-            // ... damage the enemy.
-            currentHealth -= 5;
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
+
+            if (cObject != null)
+            {
+                currentHealth -= dmg;
+                Debug.Log(currentHealth);
+
+            }
 
             if (currentHealth <= 0)
             {
-                isDead = true;
+                //isDead = true;
                 Destroy(gameObject);
             }
         }

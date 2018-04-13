@@ -87,12 +87,18 @@ public class Control : MonoBehaviour {
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player has health to lose...
-        if (currentHealth > 0 && collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             cObject = collision.gameObject;
-            float dmg = cObject.GetComponent<FloatBug>().AttackDamage();
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
 
-            currentHealth -= dmg; //enemy.AttackDamage() isnt working
+            if(cObject != null)
+            {
+                currentHealth -= dmg;
+               // Debug.Log(currentHealth);
+
+            }
+
 
             /* teach me senpai, trying to make player jolt back when colliding with enemy
             if (facingRight)
@@ -105,11 +111,10 @@ public class Control : MonoBehaviour {
             }
             */
 
-            Debug.Log(currentHealth);
 
             if (currentHealth <= 0)
             {
-                isDead = true;
+                //isDead = true;
                 Destroy(gameObject);
             }
         }

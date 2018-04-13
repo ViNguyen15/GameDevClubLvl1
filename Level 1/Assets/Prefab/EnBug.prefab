@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 251672474750277118}
   - component: {fileID: 114228869472582424}
   - component: {fileID: 50547309162718920}
+  - component: {fileID: 114750016325617854}
   m_Layer: 8
   m_Name: EnBug
   m_TagString: Enemy
@@ -277,6 +278,18 @@ MonoBehaviour:
   isGround:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &114750016325617854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329208068675852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439d72ee012e4414ca0a4ad4d1604af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 10
 --- !u!251 &251419589233479746
 PlatformEffector2D:
   m_ObjectHideFlags: 1

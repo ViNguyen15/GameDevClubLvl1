@@ -1497,11 +1497,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &445586061 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d,
-    type: 2}
-  m_PrefabInternal: {fileID: 754097905}
 --- !u!1 &485836091
 GameObject:
   m_ObjectHideFlags: 0
@@ -6011,19 +6006,24 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114824200265784438, guid: 72d2683b2f6592040b6beefc85234743,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 445586061}
     - target: {fileID: 1741209934182598, guid: 72d2683b2f6592040b6beefc85234743, type: 2}
       propertyPath: m_Name
       value: Main Camera (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 114824200265784438, guid: 72d2683b2f6592040b6beefc85234743,
+    - target: {fileID: 20147924717444976, guid: 72d2683b2f6592040b6beefc85234743,
         type: 2}
-      propertyPath: offset.x
-      value: 7
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20147924717444976, guid: 72d2683b2f6592040b6beefc85234743,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.030020263
+      objectReference: {fileID: 0}
+    - target: {fileID: 20147924717444976, guid: 72d2683b2f6592040b6beefc85234743,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.11764705
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72d2683b2f6592040b6beefc85234743, type: 2}

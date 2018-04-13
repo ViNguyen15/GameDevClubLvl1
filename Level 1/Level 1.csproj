@@ -289,6 +289,7 @@
     <Compile Include="Assets\Scripts\BulletCollision.cs" />
     <Compile Include="Assets\Scripts\CameraControler.cs" />
     <Compile Include="Assets\Scripts\Control.cs" />
+    <Compile Include="Assets\Scripts\DamageController.cs" />
     <Compile Include="Assets\Scripts\EnableBlink.cs" />
     <Compile Include="Assets\Scripts\EnableDash.cs" />
     <Compile Include="Assets\Scripts\FloatBug.cs" />
