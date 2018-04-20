@@ -1970,11 +1970,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -57.7
+      value: -55.6
       objectReference: {fileID: 0}
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -18.06
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4515385220995594, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2033,7 +2033,7 @@ AudioSource:
   m_Volume: 0.226
   m_Pitch: 1
   Loop: 1
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
