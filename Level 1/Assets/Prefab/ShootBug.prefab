@@ -35,8 +35,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4841688347797238}
   - component: {fileID: 61682573144539136}
+  - component: {fileID: 114893475629351670}
   m_Layer: 12
-  m_Name: GameObject
+  m_Name: FireArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +145,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1002401813478718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87, y: 0, z: 0}
+  m_LocalPosition: {x: 0.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4891364368921530}
@@ -158,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 1413000555727802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -72.21, y: -42.3, z: -0.080078125}
-  m_LocalScale: {x: 2.5925698, y: 2.11042, z: 1}
+  m_LocalScale: {x: 2.59257, y: 2.11042, z: 1}
   m_Children:
   - {fileID: 4059668793980672}
   - {fileID: 4011749694307760}
@@ -344,6 +345,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 19.3578, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114893475629351670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015597631559100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfeaebd5d8e6794292af6354b5518ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114909477873814984
 MonoBehaviour:
   m_ObjectHideFlags: 1

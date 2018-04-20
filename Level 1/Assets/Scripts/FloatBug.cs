@@ -17,7 +17,7 @@ public class FloatBug : MonoBehaviour {
     private GameObject cObject;
 
     //health
-    private float startingHealth = 10f;
+    private float startingHealth = 15f;
     private float currentHealth;
     private bool isDead;
     private bool damage;
@@ -93,7 +93,6 @@ public class FloatBug : MonoBehaviour {
             if (cObject != null)
             {
                 currentHealth -= dmg;
-                Debug.Log(currentHealth);
 
             }
 
