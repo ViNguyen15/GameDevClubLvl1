@@ -69,7 +69,9 @@ public class ShootBugController : MonoBehaviour {
 
         if (collision.tag == "Player")
         {
-            gameObject.GetComponentInParent<ShootBugController>().SpawnBullets(numberOfBullets);
+            //gameObject.GetComponentInParent<ShootBugController>().SpawnBullets(numberOfBullets);
+            SpawnBullets(numberOfBullets);
+            //ShootAtPlayer();
             Debug.Log("Player Targeted");
         }
 
@@ -78,8 +80,9 @@ public class ShootBugController : MonoBehaviour {
     public void ShootAtPlayer()
     {
         Rigidbody2D eBulletClone = Instantiate(eBullet, firePoint.transform.position, transform.rotation);
-        eBulletClone.velocity = new Vector2(bulletSpeed, 0);
+
     }
+
 
     public void SpawnBullets(int projectiles)
     {
@@ -95,7 +98,7 @@ public class ShootBugController : MonoBehaviour {
             Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosition);
             Vector2 projectileMoveDirection = (projectileVector - startPoint).normalized * bulletSpeed;
 
-            Rigidbody2D eBulletClone = Instantiate(eBullet, startPoint, Quaternion.identity);
+            Rigidbody2D eBulletClone = Instantiate(eBullet, startPoint, transform.rotation);
             eBulletClone.velocity = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
 
             angle += angleStep;
