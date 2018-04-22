@@ -182,7 +182,10 @@ public class Control : MonoBehaviour {
     private void Movement(float horizontal, float vertVelocity)
     {
         //Horizontal Movement
-        myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
+        if (!onWall)
+        {
+            myRigidBody.velocity = new Vector2(horizontal * moveSpeed, myRigidBody.velocity.y);
+        }
         //Animation for walking
         if (horizontal != 0)
         {
@@ -244,13 +247,14 @@ public class Control : MonoBehaviour {
                 jumpButton = false;
             }
         }
-
+        /*
         //WallSlide
         if (onWall)
         {
             myRigidBody.velocity = new Vector2(0, -3f);
 
         }
+        */
     }
 
     private void HandleInput()
