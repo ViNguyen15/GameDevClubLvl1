@@ -172,7 +172,7 @@ public class Control : MonoBehaviour {
         Flip(horizontal);
 
         //Debug.Log(currentHealth);
-        Debug.Log(isFalling);
+        //Debug.Log(isFalling);
 
         // falling
         if (myRigidBody.velocity.y < -0.01f == true)
