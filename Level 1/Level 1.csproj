@@ -290,6 +290,9 @@
     <Compile Include="Assets\Scripts\CameraControler.cs" />
     <Compile Include="Assets\Scripts\Control.cs" />
     <Compile Include="Assets\Scripts\DamageController.cs" />
+    <Compile Include="Assets\Scripts\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\DialogueTrigger.cs" />
     <Compile Include="Assets\Scripts\EnableBlink.cs" />
     <Compile Include="Assets\Scripts\EnableDash.cs" />
     <Compile Include="Assets\Scripts\FloatBug.cs" />
