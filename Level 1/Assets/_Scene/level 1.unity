@@ -2009,6 +2009,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114691783297439422, guid: fbf61316c470cb84d993dc4aa98eb27d,
+        type: 2}
+      propertyPath: jumpForce
+      value: 1200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbf61316c470cb84d993dc4aa98eb27d, type: 2}
   m_IsPrefabParent: 0
@@ -2364,6 +2369,21 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 82333860198933112, guid: 5ecaf41f8763b1f45835517e61935646,
+        type: 2}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82333860198933112, guid: 5ecaf41f8763b1f45835517e61935646,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82333860198933112, guid: 5ecaf41f8763b1f45835517e61935646,
+        type: 2}
+      propertyPath: Mute
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ecaf41f8763b1f45835517e61935646, type: 2}

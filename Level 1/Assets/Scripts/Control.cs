@@ -42,6 +42,7 @@ public class Control : MonoBehaviour {
 
     private Rigidbody2D myRigidBody;
     private bool isGrounded;
+    private bool isFalling;
 
     //button inputs
     private bool jumpButton;
@@ -103,7 +104,7 @@ public class Control : MonoBehaviour {
 
 
 
-            /* teach me senpai, trying to make player jolt back when colliding with enemy
+            /* player jolt back upon taking damage
             if (facingRight)
             {
                 myRigidBody.AddForce(new Vector2(1, 1));
@@ -171,6 +172,18 @@ public class Control : MonoBehaviour {
         Flip(horizontal);
 
         //Debug.Log(currentHealth);
+        Debug.Log(isFalling);
+
+        // falling
+        if (myRigidBody.velocity.y < -0.01f == true)
+        {
+             isFalling = true;
+        }
+        else
+        {
+            isFalling = false;
+        }
+
     }
 
     private void LateUpdate()
@@ -234,34 +247,37 @@ public class Control : MonoBehaviour {
 
 
         //WallJump
-        if (!isGrounded && jumpButton && onWall)
+        if (!isGrounded && jumpButton && onWall && isFalling)
         {
-            if(facingRight)
+            
+
+            if (facingRight)
             {
-                myRigidBody.AddForce(new Vector2(-jumpForce*3, jumpForce));
+                myRigidBody.AddForce(new Vector2(-100, jumpForce+80));
                 jumpButton = false;
             }
             if (!facingRight)
             {
-                myRigidBody.AddForce(new Vector2(jumpForce*3, jumpForce));
+                myRigidBody.AddForce(new Vector2(100, jumpForce+80));
                 jumpButton = false;
             }
         }
-        /*
+        
         //WallSlide
-        if (onWall)
+        if (onWall && isFalling)
         {
-            myRigidBody.velocity = new Vector2(0, -3f);
+            myRigidBody.velocity = new Vector2(0, -5f);
 
         }
-        */
+        
     }
+
 
     private void HandleInput()
     {
 
         //Jump
-        if (Input.GetButtonDown("Jump") && (isGrounded || onWall))
+        if (Input.GetButtonDown("Jump") && (isGrounded || onWall && isFalling))
         {
             sound.PlaySound("jump");
             jumpButton = true;
