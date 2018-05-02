@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61676879636780926}
   - component: {fileID: 114984270048152954}
   - component: {fileID: 114040698440648110}
+  - component: {fileID: 114599568001551826}
   m_Layer: 10
   m_Name: pBullet
   m_TagString: PBullet
@@ -101,6 +102,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 5
+--- !u!114 &114599568001551826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614558999735536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d4f91c6e583f444a25e6d5713326ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
 --- !u!114 &114984270048152954
 MonoBehaviour:
   m_ObjectHideFlags: 1

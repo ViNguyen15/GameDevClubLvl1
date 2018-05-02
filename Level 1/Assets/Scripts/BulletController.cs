@@ -22,15 +22,14 @@ public class BulletController : MonoBehaviour {
         
     }
 
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
     }
-
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
-
 
 }
