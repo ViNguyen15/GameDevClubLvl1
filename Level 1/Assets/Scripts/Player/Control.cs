@@ -58,7 +58,6 @@ public class Control : MonoBehaviour {
     //Power Ups
     private bool dashUp;
     private bool teleUp;
-    private bool wallJumpUp;
 
     // Use this for initialization
     void Start() {
@@ -74,16 +73,6 @@ public class Control : MonoBehaviour {
 
     }
 
-    //health
-    public float getHealth()
-    {
-        return this.currentHealth;
-    }
-
-    public void getHealth(float health)
-    {
-        this.currentHealth = health;
-    }
 
     //taking damage
     public void OnCollisionEnter2D(Collision2D collision)
@@ -130,6 +119,7 @@ public class Control : MonoBehaviour {
         if (currentHealth <= 0)
         {
             //isDead = true;
+            currentHealth = 0;
             Destroy(gameObject);
         }
     }
@@ -415,6 +405,18 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+
+    //health
+    public float getHealth()
+    {
+        return currentHealth;
+    }
+
+    public float getStartingHealth()
+    {
+        return startingHealth;
     }
 
     public bool getIsGrounded()
