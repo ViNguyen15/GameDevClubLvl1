@@ -88,8 +88,8 @@ public class Control : MonoBehaviour {
     //taking damage
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        // If the player has health to lose...
-        if (collision.gameObject.tag == "Enemy")
+        // If the player has health to lose
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EBullet")
         {
             cObject = collision.gameObject;
             float dmg = cObject.GetComponent<DamageController>().getDmg();
@@ -98,24 +98,20 @@ public class Control : MonoBehaviour {
             {
                 currentHealth -= dmg;
                // Debug.Log(currentHealth);
-
             }
 
-
-
-
-            /* player jolt back upon taking damage
+             //player jolt back upon taking damage
             if (facingRight)
             {
-                myRigidBody.AddForce(new Vector2(1, 1));
+                myRigidBody.velocity = new Vector2(-80, 10);
             }
             else
             {
-                myRigidBody.AddForce(new Vector2(-1, 1));
+                myRigidBody.velocity = (new Vector2(80, 10));
             }
-            */
         }
 
+        /* taking damage from bullets
         if (collision.gameObject.tag == "EBullet")
         {
             cObject = collision.gameObject;
@@ -129,6 +125,7 @@ public class Control : MonoBehaviour {
             }
 
         }
+        */
 
         if (currentHealth <= 0)
         {
@@ -241,7 +238,6 @@ public class Control : MonoBehaviour {
 
             animator.SetBool("Dashing", true);
             StartCoroutine(Dash());
-
             
         }
 
