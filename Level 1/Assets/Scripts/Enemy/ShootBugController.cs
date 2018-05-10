@@ -17,6 +17,7 @@ public class ShootBugController : MonoBehaviour {
 
     private Vector2 startPoint;
     private const float radius = 1f;
+    private float timer = 3f;
 
     //health
     private float startingHealth = 15f;
@@ -38,7 +39,7 @@ public class ShootBugController : MonoBehaviour {
     }
 
     //taking damage
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "PBullet")
         {
@@ -63,29 +64,46 @@ public class ShootBugController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        startPoint = firePoint.transform.position;
-
-        Debug.Log("Player Targeted");
-
         if (collision.tag == "Player")
         {
-            //gameObject.GetComponentInParent<ShootBugController>().SpawnBullets(numberOfBullets);
             SpawnBullets(numberOfBullets);
-            //ShootAtPlayer();
-            Debug.Log("Player Targeted");
         }
 
     }
 
-    public void ShootAtPlayer()
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        timer -= Time.deltaTime;
+        if(timer < 0)
+        {
+            SpawnBullets(numberOfBullets);
+            resetTime();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        resetTime();
+    }
+
+    private void resetTime()
+    {
+        timer = 3f;
+    }
+
+    private void ShootAtPlayer()
     {
         Rigidbody2D eBulletClone = Instantiate(eBullet, firePoint.transform.position, transform.rotation);
 
     }
 
 
-    public void SpawnBullets(int projectiles)
+    private void SpawnBullets(int projectiles)
     {
+
+        startPoint = firePoint.transform.position;
+
+
         float angleStep = 360f / projectiles;
         float angle = 0f;
 
