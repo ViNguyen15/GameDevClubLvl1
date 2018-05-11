@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 23229969770963512}
   - component: {fileID: 61170814950759954}
   - component: {fileID: 251979159975207772}
+  - component: {fileID: 114767864945189354}
   m_Layer: 8
   m_Name: Danger
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +110,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114767864945189354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1938780777443730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439d72ee012e4414ca0a4ad4d1604af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 10
 --- !u!251 &251979159975207772
 PlatformEffector2D:
   m_ObjectHideFlags: 1
