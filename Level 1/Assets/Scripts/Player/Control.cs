@@ -234,6 +234,11 @@ public class Control : MonoBehaviour {
         {
             Shoot();
         }
+        //charge shot
+        if (Input.GetButtonUp("Fire3"))
+        {
+            Shoot();
+        }
         //Make Shield
         if (Input.GetButtonDown("Fire4"))
         {
