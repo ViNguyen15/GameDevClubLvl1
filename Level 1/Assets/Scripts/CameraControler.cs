@@ -13,7 +13,7 @@ public class CameraControler : MonoBehaviour {
     [SerializeField]
     private Vector3 offsetR;
 
-    private float smoothSpeed = 4f;
+    private float smoothSpeed = 2f;
 
 
 
@@ -28,18 +28,18 @@ public class CameraControler : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
 
-    void FixedUpdate()
-    {
         moveCamera();
+
     }
+
 
     private void moveCamera()
     {
 
         bool facingRight = playerScript.getFacingRight();
+
+        
 
 
         Vector3 desiredposition;
@@ -48,15 +48,18 @@ public class CameraControler : MonoBehaviour {
         {
             desiredposition = target.position + offset;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredposition, smoothSpeed * Time.deltaTime);
+          //  transform.SetPositionAndRotation(target.position + offset, Quaternion.identity);
             transform.position = smoothedPosition;
         }
         if (!facingRight)
         {
             desiredposition = target.position + offsetR;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredposition, smoothSpeed * Time.deltaTime);
+           // transform.SetPositionAndRotation(target.position + offsetR, Quaternion.identity);
             transform.position = smoothedPosition;
         }
 
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x,target.position.x + -10 ,target.localPosition.x + 10),Mathf.Clamp(transform.position.y, target.position.y -2, target.position.y + 2), -10);
 
 
     }
