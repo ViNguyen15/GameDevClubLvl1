@@ -86,6 +86,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1451351223574786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4272548261332520}
+  m_Layer: 9
+  m_Name: ShieldSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1547148005679760
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +207,19 @@ Transform:
   m_Father: {fileID: 4515385220995594}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -0.72200006, z: 0}
+--- !u!4 &4272548261332520
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451351223574786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.26, y: 0.086, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4515385220995594}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4283808395293122
 Transform:
   m_ObjectHideFlags: 1
@@ -212,7 +240,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675457111063612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.7, y: -18.06, z: 0}
+  m_LocalPosition: {x: -50.07, y: -0.37, z: 0}
   m_LocalScale: {x: 7.024525, y: 6.009307, z: 1}
   m_Children:
   - {fileID: 4283808395293122}
@@ -224,6 +252,7 @@ Transform:
   - {fileID: 4923960091555442}
   - {fileID: 4109689515767708}
   - {fileID: 4118418080321804}
+  - {fileID: 4272548261332520}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -321,7 +350,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 3.5
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -380,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound: {fileID: 114544577009201468, guid: 5ecaf41f8763b1f45835517e61935646, type: 2}
   moveSpeed: 10
-  jumpForce: 1100
+  jumpForce: 1200
   groundPoints:
   - {fileID: 4283808395293122}
   - {fileID: 4724085599389894}
@@ -395,8 +424,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   teleDistance: 10000
+  shieldPoint: {fileID: 1451351223574786}
   dashSpeed: 30
-  pBullet: {fileID: 50806796186139614, guid: a152c3d70be97974296e9896a7cf48f4, type: 2}
+  pBullet: {fileID: 50243617046676720, guid: a152c3d70be97974296e9896a7cf48f4, type: 2}
+  shield: {fileID: 1133806361508228, guid: 323bc74dc933d934b92365ae933fde6b, type: 2}
 --- !u!212 &212291016369808464
 SpriteRenderer:
   m_ObjectHideFlags: 1

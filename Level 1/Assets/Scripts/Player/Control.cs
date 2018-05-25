@@ -23,9 +23,14 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private float teleDistance;
     [SerializeField]
+    private GameObject shieldPoint;
+    [SerializeField]
     private float dashSpeed;
     [SerializeField]
     private Rigidbody2D pBullet;
+    [SerializeField]
+    private GameObject shield;
+
 
 
     private float groundRadius = 0.2f;
@@ -73,61 +78,6 @@ public class Control : MonoBehaviour {
 
     }
 
-
-    //taking damage
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        // If the player has health to lose
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EBullet")
-        {
-            cObject = collision.gameObject;
-            float dmg = cObject.GetComponent<DamageController>().getDmg();
-
-            if(cObject != null)
-            {
-                currentHealth -= dmg;
-               // Debug.Log(currentHealth);
-            }
-
-             //player jolt back upon taking damage
-            if (facingRight)
-            {
-                myRigidBody.velocity = new Vector2(-80, 10);
-            }
-            else
-            {
-                myRigidBody.velocity = (new Vector2(80, 10));
-            }
-        }
-
-        /* taking damage from bullets
-        if (collision.gameObject.tag == "EBullet")
-        {
-            cObject = collision.gameObject;
-            float dmg = cObject.GetComponent<DamageController>().getDmg();
-
-            if (cObject != null)
-            {
-                currentHealth -= dmg;
-                // Debug.Log(currentHealth);
-
-            }
-
-        }
-        */
-
-        if (currentHealth <= 0)
-        {
-            //isDead = true;
-            currentHealth = 0;
-            Destroy(gameObject);
-        }
-    }
-
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-        cObject = null;
-    }
 
 
 
@@ -197,8 +147,6 @@ public class Control : MonoBehaviour {
         {
             animator.SetBool("Walking", false);
         }
-
-
 
         //Jump
         if (isGrounded && jumpButton && !onWall)
@@ -286,6 +234,16 @@ public class Control : MonoBehaviour {
         {
             Shoot();
         }
+        //charge shot
+        if (Input.GetButtonUp("Fire3"))
+        {
+            Shoot();
+        }
+        //Make Shield
+        if (Input.GetButtonDown("Fire4"))
+        {
+            SpawnShield();
+        }
     }
 
     private void Shoot()
@@ -309,6 +267,12 @@ public class Control : MonoBehaviour {
 
 
         }
+    }
+
+    private void SpawnShield()
+    {
+        //Vector2 spawnPoint = shieldPoint.transform.position;
+        GameObject shieldClone = Instantiate(shield, shieldPoint.transform.position, transform.rotation);
     }
 
 
@@ -405,6 +369,61 @@ public class Control : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    //taking damage
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        // If the player has health to lose
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EBullet")
+        {
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
+
+            if (cObject != null)
+            {
+                currentHealth -= dmg;
+                // Debug.Log(currentHealth);
+            }
+
+            //player jolt back upon taking damage
+            if (facingRight)
+            {
+                myRigidBody.velocity = new Vector2(-80, 10);
+            }
+            else
+            {
+                myRigidBody.velocity = (new Vector2(80, 10));
+            }
+        }
+
+        /* taking damage from bullets
+        if (collision.gameObject.tag == "EBullet")
+        {
+            cObject = collision.gameObject;
+            float dmg = cObject.GetComponent<DamageController>().getDmg();
+
+            if (cObject != null)
+            {
+                currentHealth -= dmg;
+                // Debug.Log(currentHealth);
+
+            }
+
+        }
+        */
+
+        if (currentHealth <= 0)
+        {
+            //isDead = true;
+            currentHealth = 0;
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        cObject = null;
     }
 
 

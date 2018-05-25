@@ -34,7 +34,7 @@ public class AbsorberAI : MonoBehaviour {
     private void Explode()
     {
         timer -= Time.deltaTime;
-        Debug.Log(timer);
+        //Debug.Log(timer);
         if(timer < 0)
         {
             gameObject.GetComponent<CircleCollider2D>().isTrigger = true;
