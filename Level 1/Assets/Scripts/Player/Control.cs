@@ -29,15 +29,16 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D pBullet;
     [SerializeField]
+    private Rigidbody2D pBulletC1;
+    [SerializeField]
+    private Rigidbody2D pBulletC2;
+    [SerializeField]
     private GameObject shield;
 
     //Charge Shot
     private Vector2 startPoint;
-    private const float radius = 1f;
-    private bool charging = false;
-    private float chargeRate = 1;
-    private int chargeCounter = 0;
-    private bool chargeComplete = false;
+    private float chargeTimer;
+    private bool charging;
 
 
     private float groundRadius = 0.2f;
@@ -128,14 +129,9 @@ public class Control : MonoBehaviour {
             isFalling = false;
         }
 
-        //charging
-        if (charging == true)
+        if (charging)
         {
-            chargeCounter++;
-            if(chargeCounter >= 300)
-            {
-                chargeComplete = true;
-            }
+            chargeTimer += Time.deltaTime;
         }
     }
 
@@ -251,17 +247,11 @@ public class Control : MonoBehaviour {
             Shoot();
             charging = true;
         }
-        //stop charging
         if (Input.GetButtonUp("Fire3"))
         {
-            charging = false;
-            chargeCounter = 0;
-        }
-        //Charge Shot
-        if (Input.GetButtonUp("Fire3")&&chargeComplete==true)
-        {
             ChargeShot();
-            chargeComplete = false;
+            charging = false;
+            chargeTimer = 0;
         }
         //Make Shield
         if (Input.GetButtonDown("Fire4"))
@@ -288,36 +278,56 @@ public class Control : MonoBehaviour {
             {
                 pBulletClone.velocity = new Vector2(dashSpeed, 0);
             }
-
-
         }
     }
 
     private void ChargeShot()
     {
-        startPoint = shieldPoint.transform.position;
-
-        float angleStep = 360f / 20;
-        float angle = 0f;
-
-        for (int i = 0; i <= 20 - 1; i++)
+        if (chargeTimer > 1)
         {
-
-            //Direction calculations
-            float projectileDirXPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
-            float projectileDirYPosition = startPoint.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
-
-            Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosition);
-            Vector2 projectileMoveDirection = (projectileVector - startPoint).normalized * dashSpeed;
-
-            Rigidbody2D pBulletClone = Instantiate(pBullet, startPoint, transform.rotation);
-            pBulletClone.velocity = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
-
-            angle += angleStep;
-
+            //Instantiate big bullet
+            Rigidbody2D pBulletClone = (Rigidbody2D)Instantiate(pBulletC1, transform.position, transform.rotation);
+            if (facingRight)
+            {
+                pBulletClone.velocity = new Vector2(dashSpeed, 0);
+                if (onWall)
+                {
+                    pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+                }
+            }
+            if (!facingRight)
+            {
+                pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+                if (onWall)
+                {
+                    pBulletClone.velocity = new Vector2(dashSpeed, 0);
+                }
+            }
         }
-    }
+        if(chargeTimer > 2)
+        {
+            //Instantiate Bigger BUllet
+            Rigidbody2D pBulletClone = (Rigidbody2D)Instantiate(pBulletC2, transform.position, transform.rotation);
+            if (facingRight)
+            {
+                pBulletClone.velocity = new Vector2(dashSpeed, 0);
+                if (onWall)
+                {
+                    pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+                }
+            }
+            if (!facingRight)
+            {
+                pBulletClone.velocity = new Vector2(-dashSpeed, 0);
+                if (onWall)
+                {
+                    pBulletClone.velocity = new Vector2(dashSpeed, 0);
+                }
+            }
+        }
 
+
+    }
     private void SpawnShield()
     {
         //Vector2 spawnPoint = shieldPoint.transform.position;
@@ -424,7 +434,7 @@ public class Control : MonoBehaviour {
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player has health to lose
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EBullet")
+        if (collision.gameObject.CompareTag("Enemy")  || collision.gameObject.CompareTag("EBullet"))
         {
             cObject = collision.gameObject;
             float dmg = cObject.GetComponent<DamageController>().getDmg();
