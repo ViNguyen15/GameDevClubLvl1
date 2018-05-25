@@ -31,6 +31,13 @@ public class Control : MonoBehaviour {
     [SerializeField]
     private GameObject shield;
 
+    //Charge Shot
+    private Vector2 startPoint;
+    private const float radius = 1f;
+    private bool charging = false;
+    private float chargeRate = 1;
+    private int chargeCounter = 0;
+    private bool chargeComplete = false;
 
 
     private float groundRadius = 0.2f;
@@ -121,6 +128,15 @@ public class Control : MonoBehaviour {
             isFalling = false;
         }
 
+        //charging
+        if (charging == true)
+        {
+            chargeCounter++;
+            if(chargeCounter >= 300)
+            {
+                chargeComplete = true;
+            }
+        }
     }
 
     private void LateUpdate()
@@ -233,11 +249,19 @@ public class Control : MonoBehaviour {
         if (Input.GetButtonDown("Fire3"))
         {
             Shoot();
+            charging = true;
         }
-        //charge shot
+        //stop charging
         if (Input.GetButtonUp("Fire3"))
         {
-            Shoot();
+            charging = false;
+            chargeCounter = 0;
+        }
+        //Charge Shot
+        if (Input.GetButtonUp("Fire3")&&chargeComplete==true)
+        {
+            ChargeShot();
+            chargeComplete = false;
         }
         //Make Shield
         if (Input.GetButtonDown("Fire4"))
@@ -265,6 +289,31 @@ public class Control : MonoBehaviour {
                 pBulletClone.velocity = new Vector2(dashSpeed, 0);
             }
 
+
+        }
+    }
+
+    private void ChargeShot()
+    {
+        startPoint = shieldPoint.transform.position;
+
+        float angleStep = 360f / 20;
+        float angle = 0f;
+
+        for (int i = 0; i <= 20 - 1; i++)
+        {
+
+            //Direction calculations
+            float projectileDirXPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+            float projectileDirYPosition = startPoint.y + Mathf.Cos((angle * Mathf.PI) / 180) * radius;
+
+            Vector2 projectileVector = new Vector2(projectileDirXPosition, projectileDirYPosition);
+            Vector2 projectileMoveDirection = (projectileVector - startPoint).normalized * dashSpeed;
+
+            Rigidbody2D pBulletClone = Instantiate(pBullet, startPoint, transform.rotation);
+            pBulletClone.velocity = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
+
+            angle += angleStep;
 
         }
     }

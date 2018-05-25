@@ -49,7 +49,6 @@ public class ShootBugController : MonoBehaviour {
             if (cObject != null)
             {
                 currentHealth -= dmg;
-
             }
 
             if (currentHealth <= 0)
